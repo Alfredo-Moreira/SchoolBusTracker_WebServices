@@ -1,0 +1,8 @@
+# Code Process
+
+1. Pick a topic or create one and choose it from the backlog file.
+2. create a new branch from the develop branch following the format: dev/"yourname"/"feature"
+3. commit all the changes to that branch
+4. Create pull request and assign it to the other developer
+5. The developer assigned is in charge of merging in the code into develop
+6. delete previous feature branch
