@@ -26,27 +26,46 @@ Source Control:
     GitHub Destop <https://desktop.github.com/>
 
 Mobile: 
+
     IDE: Android Studio <https://developer.android.com/studio/index.html>
+    
     Best Practices: <https://developer.android.com/guide/practices/index.html>
 
 Web Services:
+
     Platform: NodeJS <https://nodejs.org/en/download/>
+    
     IDE: Sublime <https://www.sublimetext.com/download>
+    
         Install Sublime components that will help with develoment
+        
             Instructions: <https://packagecontrol.io/installation#st3>
+            
             NodeJS
+            
             JSFormat
+            
             Markdown Preview
+            
             Markdown Editting
+            
             SublimeCodeIntel
+            
     MongoDB: Installation <https://docs.mongodb.com/manual/installation/>,<https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/>
+    
     Frameworks
+    
         RESTful API (Express) <https://expressjs.com/>
+        
         Security (Passport) <http://passportjs.org/>
+        
         MongoDB Interface (Mongoose) <http://mongoosejs.com/>
+        
 
 
-Testing Web Services: Google Chrome Extension Postman: <https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en>
+Testing Web Services: Google Chrome Extension Postman:
+
+<https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en>
 
 
 
