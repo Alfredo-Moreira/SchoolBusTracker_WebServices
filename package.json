@@ -1,0 +1,30 @@
+{
+  "name": "package",
+  "version": "1.0.0",
+  "description": "This project started as my Senior Design project in college. Unfortunately, in college I was not so in-tune with Software Development cycle/best practices. Now 2 years into the IT Corporate world I’m have now a better understanding. Thus this 2nd attempt at this project.",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.15.2",
+    "git": "^0.1.5",
+    "kerberos": "^0.0.22",
+    "mongodb": "^2.2.24",
+    "mongoose": "^4.8.6",
+    "npm-git-install": "^0.3.0",
+    "passport": "^0.3.2",
+    "save": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alfredo-Moreira/SchoolBusTracker_WebServices.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alfredo-Moreira/SchoolBusTracker_WebServices/issues"
+  },
+  "homepage": "https://github.com/Alfredo-Moreira/SchoolBusTracker_WebServices#readme"
+}
