@@ -2,7 +2,9 @@
 
 // 3/17/2017
 
+var config = require('./config/config');
 var express = require ('express');
+var mongoose = require('mongoose');
 var app = express();
 
 	app.get('/',function (req,res) {
@@ -10,17 +12,12 @@ var app = express();
 
 	});
 
-app.listen(8080, '127.0.0.1', function(){
-	 console.log('Example app listening on port 8080!')
-});
 
 
 
 
-mongoose.connect(config.mongoDB_connection_string); 
-'mongoDB_connection_string':'mongodb://127.0.0.1/BusTrackerDB';
 
-mongoose.connect(BusTrackerDB,function (err) {
+mongoose.connect(config.mongoDB_connection_string,function (err) {
     if(err){
         console.log('Connection Error',err);
     }else {
@@ -31,4 +28,9 @@ mongoose.connect(BusTrackerDB,function (err) {
 
 //Require config file
 
-var config = require('./config/config');
+
+
+
+app.listen(8080, '127.0.0.1', function(){
+	 console.log('Example app listening on port 8080!')
+});
