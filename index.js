@@ -14,5 +14,21 @@ app.listen(8080, '127.0.0.1', function(){
 	 console.log('Example app listening on port 8080!')
 });
 
- var mongoose = require ('mongoose');
- mongoose.connect('mongodb://localhost/myapp');
+
+
+
+mongoose.connect(config.mongoDB_connection_string); 
+'mongoDB_connection_string':'mongodb://127.0.0.1/BusTrackerDB';
+
+mongoose.connect(BusTrackerDB,function (err) {
+    if(err){
+        console.log('Connection Error',err);
+    }else {
+        console.log('Connection Successful');
+    }
+
+});
+
+//Require config file
+
+var config = require('./config/config');
