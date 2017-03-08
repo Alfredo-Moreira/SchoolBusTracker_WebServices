@@ -6,25 +6,25 @@
 
 
 //Variables 
-
+var config = require('./config/config');
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
 var DBConnection = mongoose.createConnection('mongodb://localhost/BusTrackerDB');
-var time = require('time-timezone');
+var moment = require('time-timezone');
 var dateFormat = moment().tz('UTC').format();
 //var integerValidator = require('mongoose-integer');
 autoIncrement.initialize(DBConnection);
 
 //Schema
 var Admin = new mongoose.Schema({
-
-adminID: {type: String, required:true};
-adminName: [{first : {type: String, required:true}, last : {type: String, require : true}],
-adminEmail: {type : String, required:true};
-adminUsername: {type : String},
-adminpassword: {type : String},
-adminRole: { type: integer},
-adminSex: {type:String, required:true},
+userRoleId: { type: Number, required:true, default:config.userRoles.admin},
+adminFirstName:{type: String, required:true},
+adminLastName:{type: String, require : true},
+adminGender: {type:String, required:true},
+adminEmail: {type : String, required:true},
+adminUsername: {type : String, required:true},
+adminpassword: {type : String, required:true},
+adminSchoolId:{type:Number, required:true},
 dateCreated :{type: Date, format: dateFormat, default: Date.now()},
 dateUpdated: {type:Date, format:dateFormat, default:Date.now()}
 };
