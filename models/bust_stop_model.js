@@ -21,7 +21,7 @@ var BusStop = new mongoose.Schema ({
 	
  stopNumber : {type: Number, required: true},
  stopAddress: {type: String, required: true},
- stopLocation: {type: [Number], required: true},
+ stopLocation: {type: [Number], required: true}, //Coordinates
  stopTotalStudents: {type: Number, require: true},
  stopAssignedStudents: {type:[Number],required:true},
 

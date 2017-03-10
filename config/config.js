@@ -17,7 +17,8 @@ userRoles :{
 },
 busRoutesTypes:{
 	'pickUp' : 0,
-	'dropOff' : 1
+	'dropOff' : 1,
+	'trip' : 3
 }
 };
 
