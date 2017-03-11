@@ -20,14 +20,14 @@
  //Schema
  var StudentScan = new mongoose.Schema ({
 
-  scanStudent : {type: Number, required: true},
-  scanBus: {type: Number, requried: true},
-  scanRoute: {type: Number, required: true},
-  scanDriver: {type: Number, required: true},
+  scanStudentId : {type: Number, required: true},
+  scanBusId: {type: Number, requried: true},
+  scanBusStopId:{type:Number,required:true},
+  scanRouteId: {type: Number, required: true},
+  scanDriverId: {type: Number, required: true},
   scanDate: {type: Date, format: dateFormat, default: Date.now()},
-  scanLocation: {type: Number, required: true}, // will be bus stop number
-
-
+  scanLocationX: {type: Number, required: true},
+  scanLocationY: {type: Number, required: true}
  });
 
  //Define model

@@ -19,12 +19,14 @@
  //Schema
 var BusStop = new mongoose.Schema ({
 	
- stopNumber : {type: Number, required: true},
  stopAddress: {type: String, required: true},
- stopLocation: {type: [Number], required: true},
+ stopLocationX: {type:Number, required: true},
+ stopLocationY: {type:Number, required:true},
  stopTotalStudents: {type: Number, require: true},
- stopAssignedStudents: {type:[Number],required:true},
-
+ stopAssignedStudentsIds: {type:[Number],required:true},
+ stopBusRouteId: {type:Number,required:true},
+ dateCreated: {type:Date, format:dateFormat, default:Date.now()},
+ dateUpdated: {type:Date, format:dateFormat, default:Date.now()}
 });
 
 //Define model
