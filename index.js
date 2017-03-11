@@ -12,11 +12,6 @@ var app = express();
 
 	});
 
-
-
-
-
-
 mongoose.connect(config.mongoDB_connection_string,function (err) {
     if(err){
         console.log('Connection Error',err);

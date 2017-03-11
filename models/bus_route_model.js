@@ -17,8 +17,8 @@ autoIncrement.initialize(DBConnection);
 //Schema
 var BusRoute = new mongoose.Schema({
 busRouteName: { type: String, required:true},
-busRouteBusStopNumber:{type:Number, required:true},
-busRouteType:{Number:Number, required:true},
+busRouteBusStopNumberTotal:{ type:Number, required:true},
+busRouteType:{ type:Number, required:true},
 dateCreated :{type: Date, format: dateFormat, default: Date.now()},
 dateUpdated: {type:Date, format:dateFormat, default:Date.now()}
 };
