@@ -6,12 +6,12 @@
 
 
 //Variables 
-var config = require('./config/config');
+var config = require('../config/config');
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
 var DBConnection = mongoose.createConnection('mongodb://localhost/BusTrackerDB');
-var moment = require('time-timezone');
-var dateFormat = moment().tz('UTC').format();
+var moment = require('moment');
+var dateFormat = moment().utc().format();
 autoIncrement.initialize(DBConnection);
 
 //Schema
@@ -21,7 +21,7 @@ busRouteBusStopNumberTotal:{ type:Number, required:true},
 busRouteType:{ type:Number, required:true},
 dateCreated :{type: Date, format: dateFormat, default: Date.now()},
 dateUpdated: {type:Date, format:dateFormat, default:Date.now()}
-};
+});
 
 //Define Model
 BusRoute.plugin(autoIncrement.plugin,'BusRoute');

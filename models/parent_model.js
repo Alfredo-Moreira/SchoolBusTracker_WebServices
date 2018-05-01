@@ -5,12 +5,12 @@
 	Parent Model**/
 
 //Variables 
-var config = require('./config/config');
+var config = require('../config/config');
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
 var DBConnection = mongoose.createConnection('mongodb://localhost/BusTrackerDB');
-var moment = require('time-timezone');
-var dateFormat = moment().tz('UTC').format();
+var moment = require('moment');
+var dateFormat = moment().utc().format();
 autoIncrement.initialize(DBConnection);
 
 //Schema
@@ -27,7 +27,7 @@ parentGender: {type:String, required:true},
 parentComments: {type:String, default:"No Comments"},
 dateCreated: {type:Date, format:dateFormat, default:Date.now()},
 dateUpdated: {type:Date, format:dateFormat, default:Date.now()}
-};
+});
 
 //Define Model
 Parent.plugin(autoIncrement.plugin,'Parent');

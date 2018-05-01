@@ -7,12 +7,12 @@
 
 
 //Variables 
- var config = require('./config/config');
+ var config = require('../config/config');
  var mongoose = require('mongoose');
  var autoIncrement = require('mongoose-auto-increment');
  var DBConnection = mongoose.createConnection('mongodb://localhost/BusTrackerDB');
- var moment = require('time-timezone');
- var dateFormat = moment().tz('UTC').format();
+ var moment = require('moment');
+ var dateFormat = moment().utc().format();
  autoIncrement.initialize(DBConnection);
 
 
@@ -20,8 +20,7 @@
 var BusStop = new mongoose.Schema ({
 	
  stopAddress: {type: String, required: true},
- stopLocationX: {type:Number, required: true},
- stopLocationY: {type:Number, required:true},
+ stopLocation: {type:{type:String}, coordinate:[], required: true},
  stopTotalStudents: {type: Number, require: true},
  stopAssignedStudentsIds: {type:[Number],required:true},
  stopBusRouteId: {type:Number,required:true},

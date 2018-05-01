@@ -6,12 +6,12 @@
 
 
   //Variables 
-var config = require('./config/config');
+var config = require('../config/config');
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
 var DBConnection = mongoose.createConnection('mongodb://localhost/BusTrackerDB');
-var moment = require('time-timezone');
-var dateFormat = moment().tz('UTC').format();
+var moment = require('moment');
+var dateFormat = moment().utc().format();
 autoIncrement.initialize(DBConnection);
 
 
@@ -34,7 +34,7 @@ driverRouteId:{type:[Number],required:true}, //driver can have multiple routes
 driverComments: {type:String, default:"No Comments"},
 dateCreated: { type: Date, format : dateFormat, default: Date.now()},
 dateUpdated: {type:Date, format:dateFormat, default:Date.now()}
-};
+});
 
 
 //Define Model
