@@ -1,0 +1,47 @@
+{
+  "name": "package",
+  "version": "1.0.0",
+  "description": "This project started as my Senior Design project in college. Unfortunately, in college I was not so in-tune with Software Development cycle/best practices. Now 2 years into the IT Corporate world I’m have now a better understanding. Thus this 2nd attempt at this project.",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt": "^2.0.1",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.2",
+    "express-session": "^1.15.6",
+    "git": "^0.1.5",
+    "helmet": "^3.12.0",
+    "http-status": "^1.0.1",
+    "kerberos": "^0.0.22",
+    "m": "^1.3.1",
+    "mocha": "^5.0.1",
+    "moment": "^2.22.1",
+    "mongodb": "^2.2.24",
+    "mongoose": "^4.13.12",
+    "mongoose-auto-increment": "^5.0.1",
+    "morgan": "^1.9.0",
+    "npm-git-install": "^0.3.0",
+    "passport": "^0.4.0",
+    "passport-localapikey": "0.0.3",
+    "save": "^2.3.2",
+    "should": "^13.2.1",
+    "supertest": "^3.0.0",
+    "swagger-tools": "^0.10.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "mongo": "mongod",
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alfredo-Moreira/SchoolBusTracker_WebServices.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alfredo-Moreira/SchoolBusTracker_WebServices/issues"
+  },
+  "homepage": "https://github.com/Alfredo-Moreira/SchoolBusTracker_WebServices#readme"
+}
