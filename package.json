@@ -4,10 +4,10 @@
   "description": "This project started as my Senior Design project in college. Unfortunately, in college I was not so in-tune with Software Development cycle/best practices. Now 2 years into the IT Corporate world I’m have now a better understanding. Thus this 2nd attempt at this project.",
   "main": "index.js",
   "dependencies": {
-    "bcrypt": "^2.0.1",
+    "bcrypt": "^3.0.0",
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
-    "express": "^4.15.2",
+    "express": "^4.16.3",
     "express-session": "^1.15.6",
     "git": "^0.1.5",
     "helmet": "^3.12.0",
@@ -26,7 +26,7 @@
     "save": "^2.3.2",
     "should": "^13.2.1",
     "supertest": "^3.0.0",
-    "swagger-tools": "^0.10.3"
+    "swagger-tools": "^0.10.4"
   },
   "devDependencies": {},
   "scripts": {
