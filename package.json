@@ -41,11 +41,22 @@
     "start": "nodemon server.js",
     "test": "jest"
   },
+  "jest":{
+    "verbose":true,
+    "colors":true,
+    "coverageReporters":[
+      "json"
+    ],
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Alfredo-Moreira/SchoolBusTracker_WebServices.git"
   },
-  "author": "",
+  "author": "Alfredo Moreira",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Alfredo-Moreira/SchoolBusTracker_WebServices/issues"
