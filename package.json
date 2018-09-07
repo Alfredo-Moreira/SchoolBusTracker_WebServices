@@ -39,10 +39,11 @@
   "scripts": {
     "mongo": "mongod",
     "start": "nodemon server.js",
-    "test": "jest"
+    "test": "jest --runInBand --detectOpenHandles"
   },
   "jest":{
     "verbose":true,
+    "bail": true,
     "coverageReporters":[
       "json"
     ],
