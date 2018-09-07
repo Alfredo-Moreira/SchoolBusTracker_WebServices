@@ -6,8 +6,7 @@ const express = require ('express');
 const mongoose = require('mongoose');
 const helmet =  require('helmet');
 const morgan = require('morgan');
-const fs = require('fs');
-const path = require('path');
+
 
 //JS Files
 const passport = require('./routes/v1/passport');
@@ -30,18 +29,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(helmet());
 
-//Variables
-const logPath = fs.createWriteStream(path.join(__dirname, '/logs/web_api_logs.log'), {flags: 'a'});
 
 
 //App Routes
 app.use('/v1/authenticate',authenticate);
 app.use('/v1/admin',admin);
-// app.get('/',function (req,res) {
-//         //To be redirected to help page or swagger page
-// 		res.redirect('/v1/authenticate/unauthorized');
+app.get('/',function (req,res) {
+        //To be redirected to help page or swagger page
+		res.redirect('/v1/authenticate/unauthorized');
 
-// });
+});
 
 //Connect to Mongo DB
 mongoose.connect(config.mongoDB_connection_string,(err)=>{
@@ -53,8 +50,5 @@ mongoose.connect(config.mongoDB_connection_string,(err)=>{
 
 });
 
-//Set up Prod vs Dev Config -- TODO
-app.use(morgan('combined',{stream:logPath}));
-app.use(morgan('tiny'));
 
 module.exports = app;
