@@ -5,22 +5,18 @@
 const express = require ('express');
 const mongoose = require('mongoose');
 const helmet =  require('helmet');
-const morgan = require('morgan');
+
 
 //JS Files
 const passport = require('./routes/v1/passport');
 const config = require('./config/config');
-
-//Variables
-const port = 8000;
-
 
 //Instantiate Application
 var app = express();
 
 //Define Routes
 const authenticate = require('./routes/v1/authenticate');
-const user = require('./routes/v1/user');
+const admin = require('./routes/v1/admin');
 
 
 //Application Configuration
@@ -36,7 +32,7 @@ app.use(helmet());
 
 //App Routes
 app.use('/v1/authenticate',authenticate);
-app.use('/v1/user',user);
+app.use('/v1/admin',admin);
 app.get('/',function (req,res) {
         //To be redirected to help page or swagger page
 		res.redirect('/v1/authenticate/unauthorized');
@@ -53,9 +49,5 @@ mongoose.connect(config.mongoDB_connection_string,(err)=>{
 
 });
 
-app.listen(port,"localhost",(err)=>{
-    if(err){
-        console.error(err);
-    }
-	console.log('Example app listening on port: '+port);
-});
+
+module.exports = app;

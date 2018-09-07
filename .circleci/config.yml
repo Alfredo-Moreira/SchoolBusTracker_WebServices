@@ -7,16 +7,21 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:7.10
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
+      - image: node:8.0
+      - image: mongo:3.4.4
 
     working_directory: ~/SchoolBusTracker_WebServices
 
     steps:
+      - run:
+          name: "Checking Versions"
+          command: |
+            node --version
+            npm --version
       - checkout
+      - run:
+          name: update-npm
+          command: 'npm install -g npm@latest'
 
       # Download and cache dependencies
       - restore_cache:
@@ -31,5 +36,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-           # run tests!
-          #- run: yarn test
+          # run tests!
+      - run: yarn test
+      - store_test_results:
+          path: test-results
