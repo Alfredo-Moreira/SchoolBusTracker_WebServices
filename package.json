@@ -40,7 +40,7 @@
   "scripts": {
     "mongo": "mongod",
     "start": "nodemon server.js",
-    "test": "jest --runInBand"
+    "test": "jest --runInBand --detectOpenHandles"
   },
   "jest":{
     "verbose":true,
