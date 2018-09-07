@@ -37,11 +37,11 @@ const logPath = fs.createWriteStream(path.join(__dirname, '/logs/web_api_logs.lo
 //App Routes
 app.use('/v1/authenticate',authenticate);
 app.use('/v1/admin',admin);
-app.get('/',function (req,res) {
-        //To be redirected to help page or swagger page
-		res.redirect('/v1/authenticate/unauthorized');
+// app.get('/',function (req,res) {
+//         //To be redirected to help page or swagger page
+// 		res.redirect('/v1/authenticate/unauthorized');
 
-});
+// });
 
 //Connect to Mongo DB
 mongoose.connect(config.mongoDB_connection_string,(err)=>{

@@ -37,3 +37,5 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
           # run tests!
       - run: yarn test
+      - store_test_results:
+          path: test-results

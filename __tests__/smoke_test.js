@@ -3,15 +3,6 @@ const app = require('../app');
 const httpStatus = require('http-status-codes');
 
 //Unauthorized Tests
-
-describe('Test the root path', () => {
-    test('It should return 302 for redirect', async () => {
-        const response = await request(app).get('/');
-        expect(response.redirect).toBe(true);
-        expect(response.statusCode).toBe(httpStatus.UNAUTHORIZED);
-        })
-    });
-
 describe('Test Authenticate with no API Key', () => {
     test('It should return 302 for redirect', async () => {
         const response = await request(app).post('/v1/authenticate');
