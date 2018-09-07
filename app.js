@@ -28,6 +28,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(helmet());
 
+//Variables
+var logPath = fs.createWriteStream(path.join(__dirname, '/logs/web_api_logs.log'), {flags: 'a'});
 
 
 //App Routes
@@ -48,5 +50,9 @@ mongoose.connect(config.mongoDB_connection_string,(err)=>{
     }
 
 });
+
+//Set up Prod vs Dev Config -- TODO
+app.use(morgan('combined',{stream:logPath}));
+app.use(morgan('tiny'));
 
 module.exports = app;
