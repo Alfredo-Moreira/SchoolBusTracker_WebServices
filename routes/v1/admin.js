@@ -2,7 +2,7 @@ var express = require('express');
 var passport = require('./passport');
 var router = express.Router();
 var mongooseUtil = require('../../helper-functions/mongooseUtil');
-var unauthorized = "/v1/authenticate/unauthorized";
+
 
 var obj;
 
