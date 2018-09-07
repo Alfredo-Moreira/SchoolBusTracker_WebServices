@@ -13,10 +13,12 @@ admin_model = require('../../models/admin_model');
 router.post('/admin/add',passport.authenticationMiddleware(),(req,res,next)=>{ 
     obj = new admin_model(req.body);
     mongooseUtil.save(obj,res);
+    next();
 });
 
 router.get('/admin/list',passport.authenticationMiddleware(),(req,res,next)=>{    
 res.send("get list");
+next()
 });
 
 
