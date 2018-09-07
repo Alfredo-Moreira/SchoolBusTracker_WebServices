@@ -9,7 +9,6 @@ jobs:
       # specify the version you desire here
       - image: node:8.0
       - image: mongo:3.4.4
-    parallelism: 4
 
     working_directory: ~/SchoolBusTracker_WebServices
 
