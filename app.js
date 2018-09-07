@@ -6,6 +6,7 @@ const express = require ('express');
 const mongoose = require('mongoose');
 const helmet =  require('helmet');
 const morgan = require('morgan');
+const fs = require('fs');
 
 //JS Files
 const passport = require('./routes/v1/passport');
@@ -29,7 +30,7 @@ app.use(passport.session());
 app.use(helmet());
 
 //Variables
-var logPath = fs.createWriteStream(path.join(__dirname, '/logs/web_api_logs.log'), {flags: 'a'});
+const logPath = fs.createWriteStream(path.join(__dirname, '/logs/web_api_logs.log'), {flags: 'a'});
 
 
 //App Routes
