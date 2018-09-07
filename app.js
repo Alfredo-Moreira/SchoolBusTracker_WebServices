@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const helmet =  require('helmet');
 const morgan = require('morgan');
 const fs = require('fs');
+const path = require('path');
 
 //JS Files
 const passport = require('./routes/v1/passport');
