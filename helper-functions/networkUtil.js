@@ -2,10 +2,12 @@
  * Created by AMoreira on 8/2/17.
  */
 
-var functionUtil = require('./functionsUtil');
-var httpStatus = require('http-status');
+const functionUtil = require('./functionsUtil');
+const httpStatus = require('http-status');
+const config = require('../config/config');
 
- var networkResponses = {
+
+ const networkResponses = {
 
     onSuccess:function(res,data){
         res.status(httpStatus.OK);
@@ -34,6 +36,13 @@ var httpStatus = require('http-status');
        return res;
 
     },
+    onAuthorizedAdminUser:function(res){
+        res.status(httpStatus.OK)
+        res.set("Content-Type","application/json");
+        res.json({Status:httpStatus.OK,Code:httpStatus.OK,apikey:config.apiInfo.apikey});
+        return res;
+ 
+     },
     onUnauthorizedUser:function(res){
         res.status(httpStatus.UNAUTHORIZED);
         res.set("Content-Type","application/json");

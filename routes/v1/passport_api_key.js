@@ -1,4 +1,3 @@
-
 //Variables
 var config = require('../../config/config')
 var passport = require('passport');

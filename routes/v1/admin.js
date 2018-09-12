@@ -1,5 +1,5 @@
 var express = require('express');
-var passport = require('./passport');
+var passport = require('./passport_api_key');
 var router = express.Router();
 var mongooseUtil = require('../../helper-functions/mongooseUtil');
 

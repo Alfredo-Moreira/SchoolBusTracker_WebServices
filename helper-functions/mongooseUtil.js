@@ -19,10 +19,8 @@ function decodeMongooseError(errorCode){
     switch (errorCode) {
         case 11000:
             return "Username is already taken!"
-            break;
         default:
             return "Something went wrong, we apologize!"
-            break;
     }
 };
 

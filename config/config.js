@@ -11,8 +11,8 @@ var config = {
 	apiInfo:{
         version:"1.0.0",
         Build:"10000000",
-        prod:"prod",
-        apikey:"AIzaSyCuxU47a171C9dJL2VZuDYMiKyOHIlaBxs",
+        dev:"development",
+        apikey:"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
         secret_id:5032
     },
     session:{
@@ -21,8 +21,14 @@ var config = {
         secret: "top_secret_key",
         cookie : {httpOnly:true,maxAge:1200000}
     },
-
-'mongoDB_connection_string':'mongodb://127.0.0.1/BusTrackerDB',
+    url:{
+        dev:"Development URL TODO",
+        test:"localhost"
+    },
+    mongoDBConnection:{
+        mongoDB_connection_string_test:'mongodb://127.0.0.1/BusTrackerDB_Test',
+        mongoDB_connection_string:'mongodb://127.0.0.1/BusTrackerDB'
+},
    
 userRoles :{
 	'admin': 0,

@@ -1,12 +1,12 @@
 const app = require('./app');
 
 //Variables
-const port = 8000;
+const port = app.get('port');
+const url = app.get('hostURL');
 
-app.listen(port,"localhost",(err)=>{
+app.listen(port,url,(err)=>{
     if(err){
-        //logging
         console.error(err);
     }
-	console.log('Example app listening on port: '+port);
+	console.log('Example app listening on address: '+url+':'+port);
 });
