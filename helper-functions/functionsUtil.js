@@ -17,12 +17,12 @@ const functionUtil = {
         adminModel.findOne({ adminUsername: username }, function(err, user) {
             if (err) { return done(err); }
             if (!user) {
-              return done(null, false, { message: 'Incorrect username' });
+              return fn(null, false, { message: 'Incorrect username' });
             }
-            if (!user.validPassword(password)) {
-              return done(null, false, { message: 'Incorrect password.' });
+            if (!user.validPassword(pass)) {
+              return fn(null, false, { message: 'Incorrect password.' });
             }
-            return done(null, user);
+            return fn(null, user);
           });
     },
     compareID:function(id,fn){
