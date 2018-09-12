@@ -1,8 +1,6 @@
 /**
  * Created by AMoreira on 8/2/17.
  */
-
-const functionUtil = require('./functionsUtil');
 const httpStatus = require('http-status');
 const config = require('../config/config');
 
