@@ -1,9 +1,8 @@
 //Variables
-var config = require('../../config/config')
-var passport = require('passport');
-var localAPIKeyStrategy = require('passport-localapikey').Strategy;
-var functionUtil = require('../../helper-functions/functionsUtil');
-var authenticationMiddleware = require('../../helper-functions/authenticate');
+const passport = require('passport');
+const localAPIKeyStrategy = require('passport-localapikey').Strategy;
+const functionUtil = require('../../helper-functions/functionsUtil');
+const authenticationMiddleware = require('../../helper-functions/authenticate');
 
 passport.use(new localAPIKeyStrategy(
  function (apikey,done){
@@ -13,7 +12,7 @@ passport.use(new localAPIKeyStrategy(
              return done(null,false);
          }
          if(user===null){
-             console.log('passport user null');
+             console.log('passport admin user null');
              return done(null,false);
          } else {
              return done(null,user);
