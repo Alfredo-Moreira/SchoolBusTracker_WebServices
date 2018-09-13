@@ -50,13 +50,13 @@ describe('Unauthorized Suite of Tests', () => {
 
       
     test('It should return 302 for redirect', async () => {
-        const response = await request(server).post('/v1/authenticate');
+        const response = await request(server).post('/v1/authenticate-admin');
         expect(response.redirect).toBe(true);
         expect(response.statusCode).toBe(httpStatus.MOVED_TEMPORARILY);
         });
 
     test('It should return 401 for unauthorized',async () => {
-        const response = await request(server).get('/v1/authenticate/unauthorized');
+        const response = await request(server).get('/v1/authenticate-admin/unauthorized');.
         expect(response.redirect).toBe(false);
         expect(response.statusCode).toBe(httpStatus.UNAUTHORIZED);
         expect(response.body.Status).toBe(httpStatus.UNAUTHORIZED);
