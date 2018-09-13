@@ -1,15 +1,32 @@
 //Mongoose helper functions
 
-var networkUtil = require('./networkUtil');
+const networkUtil = require('./networkUtil');
 
-var mongooseFunctions = {
+const mongooseFunctions = {
     save:function(schemaObj,res){
-        schemaObj.save(function(err){
+        schemaObj.save((err)=>{
             if(err){ 
                 return networkUtil.onBadRequest(res,null,decodeMongooseError(err.code));//decodeMongooseError(err.code));
             }
             return networkUtil.onSuccess(res,"Data saved");
         })
+    },
+    findAll:function(schemaObj,res){
+        schemaObj.find({},(err,docs)=>{
+            if(err){
+                return networkUtil.onBadRequest(res,null,decodeMongooseError(err.code));
+            }
+            return networkUtil.onSuccess(res,docs)
+        });
+    },
+    findByParams:function(schemaObj,params,res){
+
+        schemaObj.findOne(params,(err,docs)=>{
+            if(err){
+                return networkUtil.onBadRequest(res,null,decodeMongooseError(err.code));
+            }
+            return networkUtil.onSuccess(res,docs)
+        });
     }
 
 

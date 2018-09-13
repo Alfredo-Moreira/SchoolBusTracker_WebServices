@@ -1,6 +1,7 @@
 //Variables
 const config = require('../config/config');
 const adminModel = require('../models/admin_model');
+const jwt = require('jsonwebtoken');
 
 
 //functions variable
@@ -14,23 +15,42 @@ const functionUtil = {
         return fn(new Error("Invalid API Key"),null);
     },
     validateAdminUser:function(username,pass,fn){
-        adminModel.findOne({ adminUsername: username }, function(err, user) {
-            if (err) { return done(err); }
-            if (!user) {
-              return fn(null, false, { message: 'Incorrect username' });
+        return adminModel.findOne({adminUsername:username},(err,user)=>{
+            if (!user || err) {
+                 return fn(null, false, { message: 'Incorrect username' });
             }
-            if (!user.validPassword(pass)) {
-              return fn(null, false, { message: 'Incorrect password.' });
+            user.comparePassword(pass,(err,isMatch)=>{
+                if (err){
+                    return fn(null, false, { message:err.message });
+                }
+                if(isMatch){
+                    return fn(null, user,{
+                    message: 'Successful Login'
+            })}else{
+                return fn(null, false, { message: 'Incorrect password' });
             }
-            return fn(null, user);
+        });
           });
     },
     compareID:function(id,fn){
-        if(this.validUser.id === id){
-            return fn(null,this.validUser);
-        } else{
-        return fn(new Error("Invalid ID"),null);
-    }
+        return adminModel.findOne({_id:id},(err,user)=>{
+            if (!user || err) {
+                return fn(null, false, { message: 'Incorrect username' });
+           }
+           return fn(null, user,{
+               message: 'Valid User'
+           });
+         });
+   },
+   generateSignedToken:function(user){
+        const token = jwt.sign(user.toJSON(),config.session.secret,{
+            expiresIn: 86400 //1 day to be reduced
+        });
+        const response = {
+            user_id: user._id,
+            token:token
+        }
+        return response;
    }
 }
 

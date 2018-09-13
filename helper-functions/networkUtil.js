@@ -3,6 +3,7 @@
  */
 const httpStatus = require('http-status');
 const config = require('../config/config');
+const functionUtil = require('../helper-functions/functionsUtil');
 
 
  const networkResponses = {
@@ -13,8 +14,9 @@ const config = require('../config/config');
         res.json({Status:httpStatus.OK,Code:httpStatus.OK,data:data});
         return res;
     },
-    onError:function(res,tool,err){
+    onError:function(res,err){
         //functionUtil.logErrors(tool,err);
+        console.log(err);
         res.status(httpStatus.INTERNAL_SERVER_ERROR);
         res.set("Content-Type","application/json");
         res.json({Status:httpStatus.INTERNAL_SERVER_ERROR,Code:httpStatus.INTERNAL_SERVER_ERROR,Message:"Internal Server Error"});
@@ -34,10 +36,17 @@ const config = require('../config/config');
        return res;
 
     },
-    onAuthorizedAdminUser:function(res){
+    onAuthorizedAdminUser:function(req,res){
         res.status(httpStatus.OK)
         res.set("Content-Type","application/json");
-        res.json({Status:httpStatus.OK,Code:httpStatus.OK,apikey:config.apiInfo.apikey});
+        req.login(req.user,{session:false},(err)=>{
+            if(err){
+                console.log(err)
+                this.onError(res,err)
+            }
+        })
+        const token = functionUtil.generateSignedToken(req.user);
+        res.json({Status:httpStatus.OK,Code:httpStatus.OK,data:token});
         return res;
  
      },

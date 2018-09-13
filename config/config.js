@@ -12,14 +12,13 @@ var config = {
         version:"1.0.0",
         Build:"10000000",
         dev:"development",
-        apikey:"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
         secret_id:5032
     },
     session:{
         saveUninitialized: false, // no saved new sessions
         resave: false, // do not automatically write to the session store
         secret: "top_secret_key",
-        cookie : {httpOnly:true,maxAge:1200000}
+        cookie : {httpOnly:true,maxAge:86400}
     },
     url:{
         dev:"Development URL TODO",
