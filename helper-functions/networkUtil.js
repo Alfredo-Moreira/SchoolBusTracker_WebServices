@@ -29,6 +29,13 @@ const functionUtil = require('../helper-functions/functionsUtil');
         res.json({Status:httpStatus.BAD_REQUEST,Code:httpStatus.BAD_REQUEST,Message:"Bad Request",Data:err});
         return res;
     },
+    onNotFound:function(res,tool,err){
+         //functionUtil.logErrors(tool,err)
+         res.set("Content-Type","application/json");
+         res.status(httpStatus.NOT_FOUND);
+         res.json({Status:httpStatus.NOT_FOUND,Code:httpStatus.NOT_FOUND,Message:"Not Found",Data:"The data was not found"});
+         return res;
+    },
     onAuthorizedUser:function(res){
        res.status(httpStatus.OK)
        res.set("Content-Type","application/json");
@@ -41,7 +48,6 @@ const functionUtil = require('../helper-functions/functionsUtil');
         res.set("Content-Type","application/json");
         req.login(req.user,{session:false},(err)=>{
             if(err){
-                console.log(err)
                 this.onError(res,err)
             }
         })

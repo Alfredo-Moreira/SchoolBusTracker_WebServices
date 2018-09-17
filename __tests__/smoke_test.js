@@ -8,9 +8,11 @@ const mockModel = require('../mocks/mock_models');
 
 //mock Models
 const mockAdmin = mockModel.adminModel;
+const mockSchool = mockModel.schoolModel;
 
 //models
 const adminModel = require('../models/admin_model');
+const schoolModel = require('../models/school_model');
 
 
 
@@ -25,6 +27,13 @@ describe('Models Suite of Tests',() =>{
             expect(item.adminFirstName).toMatch(mockAdmin.adminFirstName);
             expect(item.adminLastName).toMatch(mockAdmin.adminLastName);
             expect(item.adminGender).toBe(mockAdmin.adminGender);
+        })
+    });
+    test('Test the School Model',async()=>{
+        return schoolModel.create(mockSchool).then(item =>{
+            expect(item.schoolName).toMatch(mockSchool.schoolName);
+            expect(item.schoolAddress).toMatch(mockSchool.schoolAddress);
+            expect(item.schoolPhoneNumber).toMatch(mockSchool.schoolPhoneNumber);
         })
     });
 });

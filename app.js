@@ -23,6 +23,7 @@ var app = express();
 //Define Routes
 const adminAuthenticate = require('./routes/v1/authenticate_admin');
 const admin = require('./routes/v1/admin');
+const school = require('./routes/v1/school');
 
 
 //Application Configuration
@@ -41,9 +42,10 @@ app.set('hostURL',hostURL);
 //App Routes
 app.use('/v1/authenticate-admin',adminAuthenticate);
 app.use('/v1/admin',admin);
+app.use('/v1/school',school);
 app.get('/',function (req,res) {
         //To be redirected to help page or swagger page
-		res.redirect('/v1/authenticate/unauthorized');
+		res.redirect('/v1/authenticate-admin/unauthorized');
 
 });
 

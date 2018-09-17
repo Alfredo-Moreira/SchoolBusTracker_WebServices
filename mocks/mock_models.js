@@ -6,8 +6,13 @@ const models ={
         adminEmail: "test@gmail.com",
         adminUsername: "testUser01",
         adminPassword: "testuserpassword",
-        adminSchoolId: '00001',
+        adminSchoolId: 0,
         userRoleId: 0
+    },
+    schoolModel:{
+        schoolName:"Jefferson Preparatory School",
+        schoolAddress:"12425 W Union, Lakewood CO 80228",
+        schoolPhoneNumber:"7208889090"
     }
 }
 

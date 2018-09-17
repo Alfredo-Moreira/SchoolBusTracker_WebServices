@@ -16,7 +16,10 @@ const mongooseFunctions = {
             if(err){
                 return networkUtil.onBadRequest(res,null,decodeMongooseError(err.code));
             }
-            return networkUtil.onSuccess(res,docs)
+            if(docs==null){
+                return networkUtil.onNotFound(res,null,"Data not found");
+            }
+            return networkUtil.onSuccess(res,docs);
         });
     },
     findByParams:function(schemaObj,params,res){
@@ -25,7 +28,34 @@ const mongooseFunctions = {
             if(err){
                 return networkUtil.onBadRequest(res,null,decodeMongooseError(err.code));
             }
-            return networkUtil.onSuccess(res,docs)
+            if(docs==null){
+                return networkUtil.onNotFound(res,null,"Data not found");
+            }
+            return networkUtil.onSuccess(res,docs);
+        });
+    },
+    deleteOne:function(schemaObj,params,res){
+
+        schemaObj.deleteOne(params,(err,docs)=>{
+            if(err){
+                return networkUtil.onBadRequest(res,null,decodeMongooseError(err.code));
+            }
+            if(docs==null){
+                return networkUtil.onNotFound(res,null,"Data not found");
+            }
+            return networkUtil.onSuccess(res,"Data Deleted");
+        });
+    },
+    updateById:function(schemaObj,id,params,res){
+
+        schemaObj.findByIdAndUpdate(id,params,(err,docs)=>{
+            if(err){
+                return networkUtil.onBadRequest(res,null,decodeMongooseError(err.code));
+            }
+            if(docs==null){
+                return networkUtil.onNotFound(res,null,"Data not found");
+            }
+            return networkUtil.onSuccess(res,docs);
         });
     }
 

@@ -24,7 +24,7 @@ adminGender: {type:Number, required:true,min:0,max:1,},
 adminEmail: {type:String, required:true},
 adminUsername: {type:String, required:true, unique: true},
 adminPassword: {type:String, required:true},
-adminSchoolId: {type:String, required:true,minlength:5,maxlength:5},
+adminSchoolId: {type:Number, required:true},
 dateCreated : {type:Date, format: dateFormat, default: Date.now()},
 dateUpdated: {type:Date, format:dateFormat, default:Date.now()}
 });
