@@ -2,7 +2,6 @@
  * Created by AMoreira on 8/2/17.
  */
 const httpStatus = require('http-status');
-const config = require('../config/config');
 const functionUtil = require('../helper-functions/functionsUtil');
 
 
@@ -33,7 +32,7 @@ const functionUtil = require('../helper-functions/functionsUtil');
          //functionUtil.logErrors(tool,err)
          res.set("Content-Type","application/json");
          res.status(httpStatus.NOT_FOUND);
-         res.json({Status:httpStatus.NOT_FOUND,Code:httpStatus.NOT_FOUND,Message:"Not Found",Data:"The data was not found"});
+         res.json({Status:httpStatus.NOT_FOUND,Code:httpStatus.NOT_FOUND,Message:"Not Found",Data:err});
          return res;
     },
     onAuthorizedUser:function(res){
