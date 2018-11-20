@@ -49,7 +49,7 @@ const functionUtil = require('../helper-functions/functionsUtil');
             if(err){
                 this.onError(res,err)
             }
-        })
+        });
         const token = functionUtil.generateSignedToken(req.user);
         res.json({Status:httpStatus.OK,Code:httpStatus.OK,data:token});
         return res;

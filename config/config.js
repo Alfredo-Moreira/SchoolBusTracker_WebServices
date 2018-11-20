@@ -25,8 +25,8 @@ var config = {
         test:"localhost"
     },
     mongoDBConnection:{
-        mongoDB_connection_string_test:'mongodb://127.0.0.1/BusTrackerDB_Test',
-        mongoDB_connection_string:'mongodb://127.0.0.1/BusTrackerDB'
+        mongoDB_connection_string_test:'mongodb://localhost/BusTrackerDB_Test',
+        mongoDB_connection_string:'mongodb://localhost/BusTrackerDB'
 },
    
 userRoles :{

@@ -6,14 +6,6 @@ const jwt = require('jsonwebtoken');
 
 //functions variable
 const functionUtil = {
-    validUser:{id:config.apiInfo.secret_id,apiKey:config.apiInfo.apikey},
-
-    validateAPIKey:function(apikey,fn){
-        if(this.validUser.apiKey === apikey.apikey){
-            return fn(null,this.validUser);
-        }
-        return fn(new Error("Invalid API Key"),null);
-    },
     validateAdminUser:function(username,pass,fn){
         return adminModel.findOne({adminUsername:username},(err,user)=>{
             if (!user || err) {
@@ -27,6 +19,7 @@ const functionUtil = {
                     return fn(null, user,{
                     message: 'Successful Login'
             })}else{
+                console.log('gothere')
                 return fn(null, false, { message: 'Incorrect password' });
             }
         });

@@ -3,8 +3,8 @@
 // 3/17/2017
 //Libraries
 const express = require ('express');
-const mongoose = require('mongoose');
 const helmet =  require('helmet');
+const mongoose = require('./mongoose');
 
 
 //JS Files
@@ -15,7 +15,8 @@ const passport = require('./routes/v1/passport_admin');
 const isDev = process.env.NODE_ENV === config.apiInfo.dev;
 const port = isDev ? process.env.PORT : 8000;
 const hostURL = isDev ? config.url.dev : config.url.test;
-const mongoDBConnection = isDev ? config.mongoDBConnection.mongoDB_connection_string : config.mongoDBConnection.mongoDB_connection_string_test;
+
+// isDev ? config.mongoDBConnection.mongoDB_connection_string :
 
 //Instantiate Application
 var app = express();
@@ -38,26 +39,30 @@ app.use(helmet());
 //Application variables
 app.set('port',port);
 app.set('hostURL',hostURL);
+app.set('mongoose',mongoose);
+
+//Connection URL
+const mongDBURL = mongoose.get('url');
+
+
 
 //App Routes
 app.use('/v1/authenticate-admin',adminAuthenticate);
 app.use('/v1/admin',admin);
 app.use('/v1/school',school);
-app.get('/',function (req,res) {
+app.get('/', (req,res)=> {
         //To be redirected to help page or swagger page
 		res.redirect('/v1/authenticate-admin/unauthorized');
 
 });
 
-//Set MongoDB Connection
-mongoose.connect(mongoDBConnection,(err)=>{
+
+mongoose.connect(mongDBURL,(err)=>{
     if(err){
-        console.error('Connection Error',err);
-    }else {
-        console.log('Connection Successful to '+ mongoDBConnection);
+        console.log(err);
+    }else{
+        console.log('Connected to ' + mongDBURL);
     }
-});
-
-
+    });
 
 module.exports = app;

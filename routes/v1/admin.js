@@ -10,13 +10,15 @@ admin_model = require('../../models/admin_model');
 
 // ********* Admin Functions *************
 //Add User
-router.post('/adminUser/add', passport.authenticate('jwt', { session: false }),(req,res)=>{ 
+//passport.authenticate('jwt', { session: false })
+router.post('/adminUser/add',passport.authenticate('jwt', { session: false }),(req,res)=>{ 
     obj = new admin_model(req.body);
     mongooseUtil.save(obj,res);
 });
 
 //Get List
-router.get('/adminUser/list', passport.authenticate('jwt', { session: false }),(req,res)=>{   
+//passport.authenticate('jwt', { session: false })
+router.get('/adminUser/list',passport.authenticate('jwt', { session: false }),(req,res)=>{   
     mongooseUtil.findAll(admin_model,res);
 });
 

@@ -15,7 +15,7 @@ jobs:
     steps:
       - run:
           name: "Checking Versions"
-          command: |
+          command:
             node --version
             npm --version
       - checkout

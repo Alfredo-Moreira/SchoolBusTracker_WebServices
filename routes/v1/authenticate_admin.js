@@ -3,7 +3,7 @@ var passport = require('./passport_admin');
 var networkUtil = require('../../helper-functions/networkUtil');   
 var router = express.Router();
 
-router.post('/',passport.authenticate('local'),(req,res)=>{
+router.post('/login',passport.authenticate('local'),(req,res)=>{
     networkUtil.onAuthorizedAdminUser(req,res)
 });
 
