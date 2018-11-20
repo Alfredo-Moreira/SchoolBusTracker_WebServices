@@ -4,7 +4,7 @@
   "description": "This project started as my Senior Design project in college. Unfortunately, in college I was not so in-tune with Software Development cycle/best practices. Now 2 years into the IT Corporate world I’m have now a better understanding. Thus this 2nd attempt at this project.",
   "main": "index.js",
   "dependencies": {
-    "bcrypt": "^3.0.0",
+    "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
