@@ -69,9 +69,10 @@
         }
       ]
     ],
-    "collectCoverage":true,
+    "collectCoverage": true,
     "coverageReporters": [
-      "json","html"
+      "json",
+      "html"
     ],
     "collectCoverageFrom": [
       "**/*.{js,jsx}",
