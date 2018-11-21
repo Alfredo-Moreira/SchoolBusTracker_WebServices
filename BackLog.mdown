@@ -1,0 +1,10 @@
+# BackLog
+
+1. Initiate Express App
+2. Create Admin Model
+3. Create Driver Model
+4. Create Parent Model
+5. Create Child Model
+6. Create School User Model
+7. Implement Passport
+8. Create Admin User Routes
