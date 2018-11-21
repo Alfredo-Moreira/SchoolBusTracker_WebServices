@@ -16,7 +16,7 @@
     "http-status-codes": "^1.3.0",
     "jest-junit": "^5.1.0",
     "jsonwebtoken": "^8.3.0",
-    "kerberos": "^1.1.2",
+    "kerberos": "^0.0.22",
     "m": "^1.3.1",
     "mime": "^2.3.1",
     "mocha": "^5.0.1",
