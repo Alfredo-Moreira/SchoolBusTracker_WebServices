@@ -21,7 +21,7 @@ jobs:
       - checkout
       - run:
           name: update-npm
-          command: 'npm install'
+          command: 'npm install -g'
 
       # Download and cache dependencies
       - restore_cache:
