@@ -49,14 +49,14 @@ const mongooseFunctions = {
     },
     updateById:function(schemaObj,id,params,res){
 
-        schemaObj.findByIdAndUpdate(id,params,(err,docs)=>{
+        schemaObj.update({_id:id},params,(err,docs)=>{
             if(err){
                 return networkUtil.onBadRequest(res,null,decodeMongooseError(err.code));
             }
             if(docs==null){
                 return networkUtil.onNotFound(res,null,"Data not found");
             }
-            return networkUtil.onSuccess(res,docs);
+            return networkUtil.onSuccess(res,"Data Updated");
         });
     }
 
