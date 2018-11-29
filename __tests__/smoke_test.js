@@ -279,7 +279,7 @@ describe('Testing School Endpoints', () => {
         schoolID = response.body.data[1]._id;
     });
 
-    test('Test /v1/school/schoolObject/:id endpoint',async()=>{
+    test('Test /v1/school/schoolObject/:id Update endpoint',async()=>{
         const response =  await supertest(app).put('/v1/school/schoolObject/'+schoolID)
         .set('Authorization', 'Bearer ' + token)
         .send(sedondMockSchool)
