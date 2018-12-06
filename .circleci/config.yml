@@ -22,6 +22,9 @@ jobs:
       - run:
           name: update-npm
           command: 'npm install -g npm@latest'
+      - run:
+          name: install codecov
+          command: 'npm install -g codecov'
 
       # Download and cache dependencies
       - restore_cache:
@@ -38,5 +41,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
           # run tests!
       - run: yarn test
+      - run: codecov
+
       - store_test_results:
           path: test-results
