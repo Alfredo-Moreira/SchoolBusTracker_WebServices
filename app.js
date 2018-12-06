@@ -11,12 +11,29 @@ const mongoose = require('./mongoose');
 const config = require('./config/config');
 const passport = require('./routes/v1/passport_admin');
 
-//Environment Variables
-const isDev = process.env.NODE_ENV === config.apiInfo.dev;
-const port = isDev ? process.env.PORT : 8000;
-const hostURL = isDev ? config.url.dev : config.url.test;
+var port;
+var hostURL;
 
-// isDev ? config.mongoDBConnection.mongoDB_connection_string :
+//Environment Variables
+const env = process.env.ENV;
+switch(env){
+    case 'Debug':
+    port = 8000;
+    hostURL = config.url.debug;
+    break;
+    case 'Test':
+    port = 8000;
+    hostURL = config.url.test;
+    break;
+    case 'Development':
+    port = process.env.PORT;
+    hostURL = config.url.development;
+    break;
+    case 'Production':
+    port = process.env.PORT;
+    hostURL = config.url.production;
+    break;
+}
 
 //Instantiate Application
 var app = express();
@@ -43,8 +60,6 @@ app.set('mongoose',mongoose);
 
 //Connection URL
 const mongDBURL = mongoose.get('url');
-
-
 
 //App Routes
 app.use('/v1/authenticate-admin',adminAuthenticate);

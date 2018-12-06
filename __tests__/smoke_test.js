@@ -2,7 +2,10 @@ const supertest = require('supertest');
 const app = require('../app');
 jest.unmock('mongoose');
 const httpStatus = require('http-status-codes');
-const isDev = process.env.NODE_ENV == 'dev';
+const isDev = process.env.ENV == 'Development';
+const isDebug = process.env.ENV == 'Debug';
+const isProd = process.env.ENV == 'Production';
+
 const mongoose = require('mongoose');
 
 //Mock Data
@@ -28,8 +31,10 @@ const functionUtil = require('../helper-functions/functionsUtil');
 
 describe('Environment Suite of tests', () => {
     test('Should failed when env not test and ', async () => {
-        expect(process.env.NODE_ENV).toEqual('test');
+        expect(process.env.ENV).toEqual('Test');
         expect(isDev).toBe(false);
+        expect(isDebug).toBe(false);
+        expect(isProd).toBe(false);
     });
 });
 
