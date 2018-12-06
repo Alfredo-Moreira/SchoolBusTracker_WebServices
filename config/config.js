@@ -21,12 +21,16 @@ var config = {
         cookie : {httpOnly:true,maxAge:86400}
     },
     url:{
-        dev:"Development URL TODO",
-        test:"localhost"
+        debug:"localhost",
+        development:"Development URL TODO",
+        test:"localhost",
+        production:"Production URL TODO"
     },
     mongoDBConnection:{
         mongoDB_connection_string_test:'mongodb://localhost/BusTrackerDB_Test',
-        mongoDB_connection_string:'mongodb://localhost/BusTrackerDB'
+        mongoDB_connection_string_Dev:'mongodb://localhost/BusTrackerDB_Dev',
+        mongoDB_connection_string_Debug:'mongodb://localhost/BusTrackerDB_Debug',
+        mongoDB_connection_string_Prod:'mongodb://localhost/BusTrackerDB'
 },
    
 userRoles :{

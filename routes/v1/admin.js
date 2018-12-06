@@ -28,6 +28,11 @@ router.get('/adminUser/:id', passport.authenticate('jwt', { session: false }),(r
     mongooseUtil.findByParams(admin_model,params,res);
 });
 
+router.delete('/adminUser/:id', passport.authenticate('jwt', { session: false }),(req,res)=>{
+    const params = {_id:req.params.id}; 
+    mongooseUtil.deleteOne(admin_model,params,res);
+})
+
 
 
 

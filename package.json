@@ -46,8 +46,11 @@
   },
   "scripts": {
     "mongo": "mongod",
-    "start": "nodemon server.js",
-    "test": "jest --runInBand --detectOpenHandles --env=node"
+    "start_Debug": "ENV=Debug nodemon server.js",
+    "start_Dev": "ENV=Development nodemon server.js",
+    "start_Prod": "ENV=Production nodemon server.js",
+    "test_circle": "ENV=Test jest --runInBand --detectOpenHandles --env=node && codecov",
+    "test": "ENV=Test jest --runInBand --detectOpenHandles --env=node"
   },
   "jest": {
     "resetModules": true,
@@ -65,10 +68,12 @@
         }
       ]
     ],
+    "coverageDirectory": "./coverage/",
     "collectCoverage": true,
     "coverageReporters": [
       "json",
-      "html"
+      "html",
+      "lcovonly"
     ],
     "collectCoverageFrom": [
       "**/*.{js,jsx}",

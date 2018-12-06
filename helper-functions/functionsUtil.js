@@ -19,7 +19,6 @@ const functionUtil = {
                     return fn(null, user,{
                     message: 'Successful Login'
             })}else{
-                console.log('gothere')
                 return fn(null, false, { message: 'Incorrect password' });
             }
         });

@@ -1,8 +1,10 @@
 const app = require('./app');
+const mongoose = app.get('mongoose');
 
 //Variables
 const port = app.get('port');
 const url = app.get('hostURL');
+const mongDBURL = mongoose.get('url');
 
 
 mongoose.connect(mongDBURL,(err)=>{

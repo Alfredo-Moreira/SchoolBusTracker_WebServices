@@ -1,8 +1,23 @@
 const mongooseConnetion = require('mongoose');
 const config = require('./config/config');
-const isDev = process.env.NODE_ENV === config.apiInfo.dev
-const mongoDBConnection = isDev ? config.mongoDBConnection.mongoDB_connection_string:config.mongoDBConnection.mongoDB_connection_string_test 
 
+//Environment Variables
+const env = process.env.ENV;
+var mongoDBConnection;
+switch(env){
+    case 'Debug':
+    mongoDBConnection= config.mongoDBConnection.mongoDB_connection_string_Debug;
+    break;
+    case 'Test':
+    mongoDBConnection=config.mongoDBConnection.mongoDB_connection_string_test;
+    break;
+    case 'Development':
+    mongoDBConnection=config.mongoDBConnection.mongoDB_connection_string_Dev;
+    break;
+    case 'Production':
+    mongoDBConnection=config.mongoDBConnection.mongoDB_connection_string_Prod;
+    break;
+}
 mongooseConnetion.set('url',mongoDBConnection);
 
 module.exports = mongooseConnetion;

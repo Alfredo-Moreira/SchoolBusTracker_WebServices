@@ -2,7 +2,10 @@ const supertest = require('supertest');
 const app = require('../app');
 jest.unmock('mongoose');
 const httpStatus = require('http-status-codes');
-const isDev = process.env.NODE_ENV == 'dev';
+const isDev = process.env.ENV == 'Development';
+const isDebug = process.env.ENV == 'Debug';
+const isProd = process.env.ENV == 'Production';
+
 const mongoose = require('mongoose');
 
 //Mock Data
@@ -12,7 +15,10 @@ const mockModel = require('../mocks/mock_models');
 const masterAdmin = mockModel.defaultAdmin;
 const mockAdmin = mockModel.adminModel;
 const badmockAdmin = mockModel.adminBadModel;
+const masterSchool = mockModel.defaultSchool;
 const mockSchool = mockModel.schoolModel;
+const sedondMockSchool = mockModel.schoolModelSecond;
+const badmockSchool = mockModel.schoolBadModel;
 
 //models
 const adminModel = require('../models/admin_model');
@@ -25,8 +31,10 @@ const functionUtil = require('../helper-functions/functionsUtil');
 
 describe('Environment Suite of tests', () => {
     test('Should failed when env not test and ', async () => {
-        expect(process.env.NODE_ENV).toEqual('test');
+        expect(process.env.ENV).toEqual('Test');
         expect(isDev).toBe(false);
+        expect(isDebug).toBe(false);
+        expect(isProd).toBe(false);
     });
 });
 
@@ -104,9 +112,9 @@ describe('Unauthorized Suite of Tests - Verify enpoints are protected', () => {
         const response = await supertest(app).get('/v1/admin/adminUser/' + 5)
         expect(response.statusCode).toBe(httpStatus.UNAUTHORIZED);
        
-    })
+    });
 
-    test('Should wrong formated add mock admin user', async () => {
+    test('Test /v1/admin/adminUser/add - wrong formated payload', async () => {
         var temp = new adminModel(badmockAdmin);
         const response = await supertest(app).post('/v1/admin/adminUser/add')
         .send(temp);
@@ -123,6 +131,7 @@ describe('Testing Admin Endpoints', () => {
         return done();
     });
     afterAll((done) => {
+        token = null;
         for (var i in mongoose.connection.collections) {
             mongoose.connection.collections[i].remove(function () {});
         }
@@ -192,7 +201,7 @@ describe('Testing Admin Endpoints', () => {
         expect(response.body.data.adminGender).toBe(mockAdmin.adminGender);
     })
 
-    test('Should wrong formated add mock admin user', async () => {
+    test('Test /v1/admin/adminUser/add - wrong formatted payload', async () => {
         var temp = new adminModel(badmockAdmin);
         const response = await supertest(app).post('/v1/admin/adminUser/add')
             .set('Authorization', 'Bearer ' + token).send(temp);
@@ -202,15 +211,115 @@ describe('Testing Admin Endpoints', () => {
         expect(response.body.Data).toBe("Something went wrong, we apologize!")
     });
 
-})
+    test('Test /v1/admin/adminUser/:id endpoint',async()=>{
+        const response = await supertest(app).delete('/v1/admin/adminUser/' + userID)
+            .set('Authorization', 'Bearer ' + token);
+            expect(response.status).toBe(httpStatus.OK);
+            expect(response.statusCode).toBe(httpStatus.OK);
+            expect(response.body.data).toBe("Data Deleted");
+    });
+
+    test('Test /v1/admin/adminUser/id endpoint to get singular Admin - Data should be non-existent ', async () => {
+        const response = await supertest(app).get('/v1/admin/adminUser/' + userID)
+            .set('Authorization', 'Bearer ' + token);
+            expect(response.status).toBe(httpStatus.NOT_FOUND);
+            expect(response.statusCode).toBe(httpStatus.NOT_FOUND);
+            expect(response.body.Message).toBe("Not Found");
+            expect(response.body.Data).toBe("Data not found");
+    });
+});
+
+describe('Testing School Endpoints', () => {
+
+    var schoolID = null;
+
+    beforeAll(async (done) => {
+        await new schoolModel(masterSchool).save();
+        await new adminModel(masterAdmin).save();
+
+        //Login and get Token
+        const creds = {
+            username: masterAdmin.adminUsername,
+            password: masterAdmin.adminPassword
+        };
+        const response = await supertest(app).post('/v1/authenticate-admin/login').send(creds);
+        token = response.body.data.token;
+        return done();
+    });
+    afterAll((done) => {
+        for (var i in mongoose.connection.collections) {
+            mongoose.connection.collections[i].remove(function () {});
+        }
+        return done();
+    });
+
+    test('Test /v1/school/schoolObject/add endpoint',async()=>{
+        const response =  await supertest(app).post('/v1/school/schoolObject/add')
+        .set('Authorization', 'Bearer ' + token)
+        .send(mockSchool);
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+        expect(response.body.data).toBe("Data saved");
+        
+    });
+    test('Test /v1/school/schoolObject/add endpoint - bad formatted payload',async()=>{
+        const response =  await supertest(app).post('/v1/school/schoolObject/add')
+        .set('Authorization', 'Bearer ' + token)
+        .send(badmockSchool);
+        expect(response.status).toBe(httpStatus.BAD_REQUEST);
+        expect(response.statusCode).toBe(httpStatus.BAD_REQUEST);
+        expect(response.body.Message).toBe("Bad Request");
+        expect(response.body.Data).toBe("Something went wrong, we apologize!")        
+    });
+
+    test('Test /v1/school/schoolObject/list endpoint',async()=>{
+        const response =  await supertest(app).get('/v1/school/schoolObject/list')
+        .set('Authorization', 'Bearer ' + token)
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+        expect(response.body.data).toBeInstanceOf(Array);
+        expect(response.body.data.length).toEqual(2);
+
+        //Get SchoolID
+        schoolID = response.body.data[1]._id;
+    });
+
+    test('Test /v1/school/schoolObject/:id Update endpoint',async()=>{
+        const response =  await supertest(app).put('/v1/school/schoolObject/'+schoolID)
+        .set('Authorization', 'Bearer ' + token)
+        .send(sedondMockSchool)
+         expect(response.status).toBe(httpStatus.OK);
+         expect(response.statusCode).toBe(httpStatus.OK);
+         expect(response.body.data).toBe("Data Updated")
+        });
 
 
-// describe('Unit Tests',() => {
+    test('Test /v1/school/schoolObject/:id endpoint',async()=>{
+        const response =  await supertest(app).get('/v1/school/schoolObject/'+schoolID)
+        .set('Authorization', 'Bearer ' + token)
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+        expect(response.body.data.schoolName).toMatch(mockSchool.schoolName);
+        expect(response.body.data.schoolAddress).toMatch(mockSchool.schoolAddress);
+        expect(response.body.data.schoolPhoneNumber).toMatch(mockSchool.schoolPhoneNumber);
 
-//   test('Test Function Validate User - wrong user',async()=>{
-//   const response = await functionUtil.validateAdminUser("username","password",(err,user)=>{
-//       expect(user).toBe(false);
-//   });
-// })
+    })
 
-// });
+    test('Test /v1/school/schoolObject/delete/:id endpoint',async()=>{
+        const response =  await supertest(app).delete('/v1/school/schoolObject/delete/'+schoolID)
+        .set('Authorization', 'Bearer ' + token)
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+        expect(response.body.data).toBe("Data Deleted");
+    });
+
+    test('Test /v1/school/schoolObject/id endpoint to get singular School - Data should be non-existent ', async () => {
+        const response = await supertest(app).get('/v1/school/schoolObject/' + schoolID)
+            .set('Authorization', 'Bearer ' + token);
+            expect(response.status).toBe(httpStatus.NOT_FOUND);
+            expect(response.statusCode).toBe(httpStatus.NOT_FOUND);
+            expect(response.body.Message).toBe("Not Found");
+            expect(response.body.Data).toBe("Data not found");
+    });
+
+});
