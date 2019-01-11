@@ -33,7 +33,7 @@
     "passport-localapikey": "0.0.3",
     "request": "^2.88.0",
     "rollbar": "^2.5.1",
-    "save": "^2.3.2",
+    "save": "^2.3.3",
     "should": "^13.2.1"
   },
   "devDependencies": {
