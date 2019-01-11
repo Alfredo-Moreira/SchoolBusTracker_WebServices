@@ -2,6 +2,8 @@
 const config = require('../config/config');
 const adminModel = require('../models/admin_model');
 const jwt = require('jsonwebtoken');
+const rollback = require('../helper-classes/rollbar');
+
 
 
 //functions variable
@@ -9,6 +11,7 @@ const functionUtil = {
     validateAdminUser:function(username,pass,fn){
         return adminModel.findOne({adminUsername:username},(err,user)=>{
             if (!user || err) {
+                 rollback.logFailedLogin(username,)
                  return fn(null, false, { message: 'Incorrect username' });
             }
             user.comparePassword(pass,(err,isMatch)=>{

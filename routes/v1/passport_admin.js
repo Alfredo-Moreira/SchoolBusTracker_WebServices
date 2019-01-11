@@ -7,6 +7,7 @@ const JWTStrategy   = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 const adminModel = require('../../models/admin_model');
 const functionUtil = require('../../helper-functions/functionsUtil');
+const rollbar = require('../../helper-classes/rollbar');
 
 
 //passport.use(new LocalStrategy(adminModel.authenticate()));
@@ -15,13 +16,14 @@ passport.use(new LocalStrategy(
   function(adminUsername, adminPassword, done) {
   return functionUtil.validateAdminUser(adminUsername,adminPassword,(err,user)=>{
         if(err){
-            console.log('passport error');
+            rollbar.logFailedLogin(adminUsername);
             return done(null,false);
         }
         if(user===null){
-            console.log('passport user null');
+            rollbar.logFailedLogin(adminUsername);
             return done(null,false);
         } else {
+            rollbar.logSuccessLogin(adminUsername);
             return done(null,user);
         }
     });

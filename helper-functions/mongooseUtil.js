@@ -1,6 +1,7 @@
 //Mongoose helper functions
 
 const networkUtil = require('./networkUtil');
+const rollbar = require('../helper-classes/rollbar');
 
 const mongooseFunctions = {
     save:function(schemaObj,res){
@@ -66,8 +67,10 @@ const mongooseFunctions = {
 function decodeMongooseError(errorCode){
     switch (errorCode) {
         case 11000:
+            rollbar.logInfo("Username already taken");
             return "Username is already taken!"
         default:
+            rollbar.logError("Something went wrong in the mongoose with code: "+errorCode);
             return "Something went wrong, we apologize!"
     }
 };
