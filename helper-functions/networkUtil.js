@@ -3,6 +3,7 @@
  */
 const httpStatus = require('http-status');
 const functionUtil = require('../helper-functions/functionsUtil');
+const rollbar = require('../helper-classes/rollbar');
 
 
  const networkResponses = {
@@ -14,22 +15,21 @@ const functionUtil = require('../helper-functions/functionsUtil');
         return res;
     },
     onError:function(res,err){
-        //functionUtil.logErrors(tool,err);
-        console.log(err);
+        rollbar.logError(err)
         res.status(httpStatus.INTERNAL_SERVER_ERROR);
         res.set("Content-Type","application/json");
         res.json({Status:httpStatus.INTERNAL_SERVER_ERROR,Code:httpStatus.INTERNAL_SERVER_ERROR,Message:"Internal Server Error"});
         return res;
     },
     onBadRequest:function(res,tool,err){
-        //functionUtil.logErrors(tool,err)
+        rollbar.logError(err)
         res.set("Content-Type","application/json");
         res.status(httpStatus.BAD_REQUEST);
         res.json({Status:httpStatus.BAD_REQUEST,Code:httpStatus.BAD_REQUEST,Message:"Bad Request",Data:err});
         return res;
     },
     onNotFound:function(res,tool,err){
-         //functionUtil.logErrors(tool,err)
+         rollbar.logError(err)
          res.set("Content-Type","application/json");
          res.status(httpStatus.NOT_FOUND);
          res.json({Status:httpStatus.NOT_FOUND,Code:httpStatus.NOT_FOUND,Message:"Not Found",Data:err});
