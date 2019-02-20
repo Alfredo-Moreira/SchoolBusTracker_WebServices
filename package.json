@@ -42,7 +42,7 @@
     "bcrypt": "^3.0.0",
     "jest": "^23.5.0",
     "jest-html-reporter": "^2.4.2",
-    "superagent": "^3.8.3",
+    "superagent": "^4.0.0",
     "supertest": "^3.3.0"
   },
   "scripts": {
