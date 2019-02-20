@@ -32,6 +32,11 @@ var config = {
         mongoDB_connection_string_Debug:'mongodb://localhost/BusTrackerDB_Debug',
         mongoDB_connection_string_Prod:'mongodb://localhost/BusTrackerDB'
 },
+rollbarConfig:{
+    accessToken: '55350a183bbb4dd58a7cba68b56d7e78',
+    captureUncaught: true,
+    captureUnhandledRejections: true
+  },
    
 userRoles :{
 	'admin': 0,

@@ -6,10 +6,13 @@ const express = require ('express');
 const helmet =  require('helmet');
 const mongoose = require('./mongoose');
 
-
 //JS Files
 const config = require('./config/config');
 const passport = require('./routes/v1/passport_admin');
+const rollback =  require('./helper-classes/rollbar');
+const date =  require('./helper-classes/moment');
+
+
 
 var port;
 var hostURL;
@@ -32,6 +35,9 @@ switch(env){
     case 'Production':
     port = process.env.PORT;
     hostURL = config.url.production;
+    break;
+    default:
+    rollback.logError("Wrong environment set up")
     break;
 }
 
@@ -71,13 +77,12 @@ app.get('/', (req,res)=> {
 
 });
 
-
 mongoose.connect(mongDBURL,(err)=>{
     if(err){
-        console.log(err);
+        rollback.logError(err)
     }else{
-        console.log('Connected to ' + mongDBURL);
+        rollback.logInfo('Server connected on host: '+hostURL+':'+port+' on DB:'+mongDBURL+' at '+date.getDate());
     }
-    });
+});
 
 module.exports = app;
