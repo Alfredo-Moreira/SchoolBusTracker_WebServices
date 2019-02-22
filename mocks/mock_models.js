@@ -46,6 +46,36 @@ const models ={
         schoolName:"Jefferson Preparatory School",
         schoolAddress:"12425 W Union, Lakewood CO 80228",
         schoolPhoneNumber:"3038889090"
+    },
+    defaultParent:{
+        parentFirstName:"James",
+        parentLasttName:"Creek",
+        parentEmail:"james@gmail.com",
+        parentPhoneNumber:"7206687710",
+        parentUsername:"username-james",
+        parentPassword:"jamesPassword",
+        parentChildId:[0],
+        parentGender:1
+    },
+    parentModelFirst:{
+        parentFirstName:"Parent",
+        parentLastName:"Automation",
+        parentEmail:"parent@gmail.com",
+        parentPhoneNumber:"7206687710",
+        parentUsername:"username-parent",
+        parentPassword:"parentPassword",
+        parentChildId:[1],
+        parentGender:1
+    },
+    parentBadModel:{
+        parentFirstName:2444,
+        parentLasttName:"Automation",
+        parentEmail:"parent@gmail.com",
+        parentPhoneNumber:"7206687710",
+        parentUsername:22,
+        parentPassword:22,
+        parentChildId:[0],
+        parentGender:1
     }
 }
 

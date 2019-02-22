@@ -19,10 +19,15 @@ const masterSchool = mockModel.defaultSchool;
 const mockSchool = mockModel.schoolModel;
 const sedondMockSchool = mockModel.schoolModelSecond;
 const badmockSchool = mockModel.schoolBadModel;
+const masterParent = mockModel.defaultParent;
+const mockParent = mockModel.parentModelFirst;
+const badmockParent = mockModel.parentBadModel;
 
 //models
 const adminModel = require('../models/admin_model');
 const schoolModel = require('../models/school_model');
+const parentModel = require('../models/parent_model');
+const childModel = require('../models/child_model');
 
 //Token Var
 var token = null;
@@ -55,7 +60,7 @@ describe('Models Suite of Tests', () => {
         expect(admin.adminFirstName).toMatch(mockAdmin.adminFirstName);
         expect(admin.adminLastName).toMatch(mockAdmin.adminLastName);
         expect(admin.adminGender).toBe(mockAdmin.adminGender);
-    })
+    });
 
     test('Test the School Model', async () => {
         await new schoolModel(mockSchool).save();
@@ -66,6 +71,17 @@ describe('Models Suite of Tests', () => {
         expect(school.schoolAddress).toMatch(mockSchool.schoolAddress);
         expect(school.schoolPhoneNumber).toMatch(mockSchool.schoolPhoneNumber);
     });
+
+    test('Test the Parent Model',async()=>{
+        await new parentModel(mockParent).save();
+        const parent = await parentModel.findOne({
+            parentFirstName: mockParent.parentFirstName
+        });
+        expect(parent.parentFirstName).toMatch(mockParent.parentFirstName);
+        expect(parent.parentLastName).toMatch(mockParent.parentLastName);
+        expect(parent.parentEmail).toMatch(mockParent.parentEmail);
+        expect(parent.parentPhoneNumber).toMatch(mockParent.parentPhoneNumber);
+    })
 });
 
 
@@ -80,13 +96,13 @@ describe('Unauthorized Suite of Tests - Verify enpoints are protected', () => {
 
 
     test('It should return 400 for bad supertest', async () => {
-        const response = await supertest(app).post('/v1/authenticate-admin/login');
+        const response = await supertest(app).post('/v1/authenticate/admin/login');
         expect(response.redirect).toBe(false);
         expect(response.statusCode).toBe(httpStatus.BAD_REQUEST);
     });
 
     test('It should return 401 for unauthorized', async () => {
-        const response = await supertest(app).get('/v1/authenticate-admin/unauthorized');
+        const response = await supertest(app).get('/v1/authenticate/unauthorized');
         expect(response.redirect).toBe(false);
         expect(response.statusCode).toBe(httpStatus.UNAUTHORIZED);
         expect(response.body.Status).toBe(httpStatus.UNAUTHORIZED);
@@ -120,6 +136,13 @@ describe('Unauthorized Suite of Tests - Verify enpoints are protected', () => {
         .send(temp);
         expect(response.statusCode).toBe(httpStatus.UNAUTHORIZED); 
     });
+
+    test('Test /v1/parent/parentUser/add - wrong formated payload', async () => {
+        var temp = new parentModel(badmockParent);
+        const response = await supertest(app).post('/v1/parent/parentUser/add')
+        .send(temp);
+        expect(response.statusCode).toBe(httpStatus.UNAUTHORIZED); 
+    });
 });
 
 describe('Testing Admin Endpoints', () => {
@@ -138,12 +161,12 @@ describe('Testing Admin Endpoints', () => {
         return done();
     });
 
-    test('Test /v1/authenticate-admin/login endpoint', async () => {
+    test('Test /v1/authenticate/admin/login endpoint', async () => {
         const creds = {
             username: masterAdmin.adminUsername,
             password: masterAdmin.adminPassword
         };
-        const response = await supertest(app).post('/v1/authenticate-admin/login').send(creds)
+        const response = await supertest(app).post('/v1/authenticate/admin/login').send(creds)
         expect(response.status).toBe(httpStatus.OK);
         expect(response.statusCode).toBe(httpStatus.OK);
 
@@ -151,12 +174,22 @@ describe('Testing Admin Endpoints', () => {
         token = response.body.data.token;
     });
 
-    test('Test /v1/authenticate-admin/login endpoint wrong creds', async () => {
+    test('Test /v1/authenticate/admin/login endpoint wrong creds', async () => {
         const creds = {
             username: masterAdmin.adminUsername,
             password: "password"
         };
-        const response = await supertest(app).post('/v1/authenticate-admin/login').send(creds)
+        const response = await supertest(app).post('/v1/authenticate/admin/login').send(creds)
+        expect(response.status).toBe(httpStatus.UNAUTHORIZED);
+        expect(response.statusCode).toBe(httpStatus.UNAUTHORIZED);
+    });
+
+    test('Test /v1/authenticate/admin/login endpoint wrong creds - username', async () => {
+        const creds = {
+            username: 5555,
+            password: "password"
+        };
+        const response = await supertest(app).post('/v1/authenticate/admin/login').send(creds)
         expect(response.status).toBe(httpStatus.UNAUTHORIZED);
         expect(response.statusCode).toBe(httpStatus.UNAUTHORIZED);
     });
@@ -242,7 +275,7 @@ describe('Testing School Endpoints', () => {
             username: masterAdmin.adminUsername,
             password: masterAdmin.adminPassword
         };
-        const response = await supertest(app).post('/v1/authenticate-admin/login').send(creds);
+        const response = await supertest(app).post('/v1/authenticate/admin/login').send(creds);
         token = response.body.data.token;
         return done();
     });
@@ -323,3 +356,179 @@ describe('Testing School Endpoints', () => {
     });
 
 });
+
+describe('Testing Parent Endpoints',()=>{
+    var userID = null;
+
+    beforeAll(async (done) => {
+        await new parentModel(masterParent).save();
+        await new adminModel(masterAdmin).save();
+        return done();
+    });
+    afterAll((done) => {
+        tokenParent = null;
+        for (var i in mongoose.connection.collections) {
+            mongoose.connection.collections[i].remove(function () {});
+        }
+        return done();
+    });
+
+    test('Test /v1/authenticate/parent/login endpoint', async () => {
+        const creds = {
+            username: masterParent.parentUsername,
+            password: masterParent.parentPassword
+        };
+        const response = await supertest(app).post('/v1/authenticate/parent/login').send(creds)
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+
+        //Get Token
+        tokenParent = response.body.data.token;
+    });
+
+    test('Test /v1/authenticate/admin/login endpoint', async () => {
+        const creds = {
+            username: masterAdmin.adminUsername,
+            password: masterAdmin.adminPassword
+        };
+        const response = await supertest(app).post('/v1/authenticate/admin/login').send(creds)
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+
+        //Get Token
+        tokenAdmin = response.body.data.token;
+    });
+
+    test('Test /v1/authenticate/parent/login endpoint wrong creds', async () => {
+        const creds = {
+            username: masterParent.parentUsername,
+            password: "password"
+        };
+        const response = await supertest(app).post('/v1/authenticate/parent/login').send(creds)
+        expect(response.status).toBe(httpStatus.UNAUTHORIZED);
+        expect(response.statusCode).toBe(httpStatus.UNAUTHORIZED);
+    });
+
+
+    test('Test /v1/authenticate/parent/login endpoint wrong creds', async () => {
+        const creds = {
+            username: 2223,
+            password: "password"
+        };
+        const response = await supertest(app).post('/v1/authenticate/parent/login').send(creds)
+        expect(response.status).toBe(httpStatus.UNAUTHORIZED);
+        expect(response.statusCode).toBe(httpStatus.UNAUTHORIZED);
+    });
+
+    test('Test /v1/parent/parentUser/add endpoint', async () => {
+        var temp = new parentModel(mockParent);
+        const response = await supertest(app).post('/v1/parent/parentUser/add')
+            .set('Authorization', 'Bearer ' + tokenAdmin).send(temp);
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+        expect(response.body.data).toBe("Data saved");
+    });
+
+    test('Test /v1/parent/parentUser/add endpoint actually added', async () => {
+        const parent = await parentModel.findOne({
+            parentFirstName: mockParent.parentFirstName
+        });
+        expect(parent.parentFirstName).toMatch(mockParent.parentFirstName);
+        expect(parent.parentLastName).toMatch(mockParent.parentLastName);
+        expect(parent.parentGender).toBe(mockParent.parentGender);
+    });
+
+    test('Test /v1/parent/parentUser/list endpoint returns all parents added', async () => {
+        const response = await supertest(app).get('/v1/parent/parentUser/list')
+            .set('Authorization', 'Bearer ' + tokenAdmin)
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+        expect(response.body.data).toBeInstanceOf(Array);
+        expect(response.body.data.length).toEqual(2);
+
+        //get Second parent not master
+        userID = response.body.data[1]._id;
+    });
+
+    test('Test /v1/parent/parentUser/id endpoint to get singular parent', async () => {
+        const response = await supertest(app).get('/v1/parent/parentUser/' + userID)
+            .set('Authorization', 'Bearer ' + tokenParent)
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+        expect(response.body.data.parentFirstName).toMatch(mockParent.parentFirstName);
+        expect(response.body.data.parentLastName).toMatch(mockParent.parentLastName);
+        expect(response.body.data.parentGender).toBe(mockParent.parentGender);
+    })
+
+    test('Test /v1/parent/parentUser/add - wrong formatted payload', async () => {
+        var temp = new parentModel({});
+        const response = await supertest(app).post('/v1/parent/parentUser/add')
+            .set('Authorization', 'Bearer ' + tokenAdmin).send(temp);
+        expect(response.status).toBe(httpStatus.BAD_REQUEST);
+        expect(response.statusCode).toBe(httpStatus.BAD_REQUEST);
+        expect(response.body.Message).toBe("Bad Request");
+        expect(response.body.Data).toBe("Something went wrong, we apologize!")
+    });
+
+    test('Test /v1/parent/parentUser/delete/:id endpoint',async()=>{
+        const response = await supertest(app).delete('/v1/parent/parentUser/delete/' + userID)
+            .set('Authorization', 'Bearer ' + tokenParent);
+            expect(response.status).toBe(httpStatus.OK);
+            expect(response.statusCode).toBe(httpStatus.OK);
+            expect(response.body.data).toBe("Data Deleted");
+    });
+
+    test('Test /v1/parent/parentUser/id endpoint to get singular parent - Data should be non-existent ', async () => {
+        const response = await supertest(app).get('/v1/parent/parentUser/' + userID)
+            .set('Authorization', 'Bearer ' + tokenParent);
+            expect(response.status).toBe(httpStatus.NOT_FOUND);
+            expect(response.statusCode).toBe(httpStatus.NOT_FOUND);
+            expect(response.body.Message).toBe("Not Found");
+            expect(response.body.Data).toBe("Data not found");
+
+    });
+})
+
+describe('Testing Child endpoints',()=>{
+    var userID = null;
+
+    beforeAll(async (done) => {
+        await new parentModel(masterParent).save();
+        await new adminModel(masterAdmin).save();
+        return done();
+    });
+    afterAll((done) => {
+        tokenParent = null;
+        for (var i in mongoose.connection.collections) {
+            mongoose.connection.collections[i].remove(function () {});
+        }
+        return done();
+    });
+
+    test('Test /v1/authenticate/parent/login endpoint', async () => {
+        const creds = {
+            username: masterParent.parentUsername,
+            password: masterParent.parentPassword
+        };
+        const response = await supertest(app).post('/v1/authenticate/parent/login').send(creds)
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+
+        //Get Token
+        tokenParent = response.body.data.token;
+    });
+
+    test('Test /v1/authenticate/admin/login endpoint', async () => {
+        const creds = {
+            username: masterAdmin.adminUsername,
+            password: masterAdmin.adminPassword
+        };
+        const response = await supertest(app).post('/v1/authenticate/admin/login').send(creds)
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+
+        //Get Token
+        tokenAdmin = response.body.data.token;
+    });
+
+})

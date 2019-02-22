@@ -8,5 +8,5 @@ app.listen(port,url,(err)=>{
     if(err){
         console.error(err);
     }
-console.log('Example app listening on address: '+url+':'+port);
+console.log('Application listening on address: '+url+':'+port);
 });
