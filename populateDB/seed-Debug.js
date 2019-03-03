@@ -3,9 +3,9 @@ const config = require('../config/config');
 const seedData = require('./seed-data');
 
 //Models
-school = 'models/school_model.js'
-admin = 'models/admin_model.js'
-parent = 'models/parent_model.js'
+const school = 'models/school_model.js'
+const admin = 'models/admin_model.js'
+const parent = 'models/parent_model.js'
 
 
 // Connect to MongoDB via Mongoose
