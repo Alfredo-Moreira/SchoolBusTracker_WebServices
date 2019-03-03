@@ -22,7 +22,7 @@ router.get('/childUser/list', passport.authenticate('admin-rule', { session: fal
 //Get List of parent 
 
 //Find by Id
-router.get('/childUser/:id', passport.authenticate(['parent-rule','child-rule'], { session: false }),(req,res)=>{
+router.get('/childUser/:id', passport.authenticate(['parent-rule','admin-rule'], { session: false }),(req,res)=>{
     const params = {_id:req.params.id}; 
     mongooseUtil.findByParams(child_model,params,res);
 });

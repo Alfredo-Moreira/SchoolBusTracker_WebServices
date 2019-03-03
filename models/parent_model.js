@@ -24,7 +24,7 @@ parentPhoneNumber:{type:String, required:true, min:10, max:10},
 parentUsername:{type: String, required: true, unique: true, min:3},
 parentPassword: {type: String, require: true,min:5},
 parentChildId:{type: [Number], required:true},
-parentGender: {type:Number, required:true,min:0,max:1,},
+parentGender: {type:Number, required:true,min:0,max:1},
 parentComments: {type:String, default:"No Comments"},
 dateCreated: {type:Date, format:dateFormat, default:Date.now()},
 dateUpdated: {type:Date, format:dateFormat, default:Date.now()}

@@ -67,6 +67,16 @@ const models ={
         parentChildId:[1],
         parentGender:1
     },
+    parentModelSecond:{
+        parentFirstName:"Parent",
+        parentLastName:"Automation II",
+        parentEmail:"parent@gmail.com",
+        parentPhoneNumber:"7206687712",
+        parentUsername:"username-parent",
+        parentPassword:"parentPassword",
+        parentChildId:[1],
+        parentGender:1
+    },
     parentBadModel:{
         parentFirstName:2444,
         parentLasttName:"Automation",
@@ -76,6 +86,50 @@ const models ={
         parentPassword:22,
         parentChildId:[0],
         parentGender:1
+    },
+    defaultChild:{
+        childFirstName:"Child",
+        childLastName:"Last",
+        childAge:8,
+        childGrade:4,
+        childGender:1,
+        childParentId:[1],
+        childSchoolId:0,
+        childRouteId:0,
+        childBusStopId:10
+    },
+    childModelFirst:{
+        childFirstName:"Adam",
+        childLastName:"James",
+        childAge:8,
+        childGrade:4,
+        childGender:1,
+        childParentId:[1],
+        childSchoolId:0,
+        childRouteId:0,
+        childBusStopId:10
+    },
+    childModelSecond:{
+        childFirstName:"Adam",
+        childLastName:"James II",
+        childAge:8,
+        childGrade:4,
+        childGender:1,
+        childParentId:[1],
+        childSchoolId:0,
+        childRouteId:0,
+        childBusStopId:10
+    },
+    childBadModel:{
+        childFirstName:444,
+        childLastName:444,
+        childAge:"hello",
+        childGrade:4,
+        childGender:1,
+        childParentId:[1],
+        childSchoolId:0,
+        childRouteId:0,
+        childBusStopId:10
     }
 }
 

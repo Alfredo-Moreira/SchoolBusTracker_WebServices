@@ -85,7 +85,6 @@
       "!**/populateDB/**",
       "!**/config/strings.js",
       "!server.js"
-
     ]
   },
   "jest-junit": {
