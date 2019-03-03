@@ -8,7 +8,7 @@ const mongoose = require('./mongoose');
 
 //JS Files
 const config = require('./config/config');
-const passport = require('./routes/v1/passport_admin');
+const passport = require('./routes/v1/passport');
 const rollback =  require('./helper-classes/rollbar');
 const date =  require('./helper-classes/moment');
 
@@ -45,10 +45,11 @@ switch(env){
 var app = express();
 
 //Define Routes
-const adminAuthenticate = require('./routes/v1/authenticate_admin');
+const authenticate = require('./routes/v1/authenticate');
 const admin = require('./routes/v1/admin');
 const school = require('./routes/v1/school');
-
+const parent = require('./routes/v1/parent');
+const child = require('./routes/v1/child');
 
 //Application Configuration
 app.use(require('cookie-parser')());
@@ -68,12 +69,14 @@ app.set('mongoose',mongoose);
 const mongDBURL = mongoose.get('url');
 
 //App Routes
-app.use('/v1/authenticate-admin',adminAuthenticate);
+app.use('/v1/authenticate',authenticate);
 app.use('/v1/admin',admin);
 app.use('/v1/school',school);
+app.use('/v1/parent',parent);
+app.use('/v1/child',child);
 app.get('/', (req,res)=> {
         //To be redirected to help page or swagger page
-		res.redirect('/v1/authenticate-admin/unauthorized');
+		res.redirect('/v1/authenticate/unauthorized');
 
 });
 
@@ -81,6 +84,7 @@ mongoose.connect(mongDBURL,(err)=>{
     if(err){
         rollback.logError(err)
     }else{
+        console.log('Server connected on host: '+hostURL+':'+port+' on DB:'+mongDBURL+' at '+date.getDate())
         rollback.logInfo('Server connected on host: '+hostURL+':'+port+' on DB:'+mongDBURL+' at '+date.getDate());
     }
 });

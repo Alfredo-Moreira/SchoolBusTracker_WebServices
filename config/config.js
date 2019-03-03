@@ -10,7 +10,7 @@ var config = {
 	
 	apiInfo:{
         version:"1.0.0",
-        Build:"10000000",
+        Build:"10000001",
         dev:"development",
         secret_id:5032
     },

@@ -55,6 +55,19 @@ const rollbar = require('../helper-classes/rollbar');
         return res;
  
      },
+     onAuthorizedParentUser:function(req,res){
+        res.status(httpStatus.OK)
+        res.set("Content-Type","application/json");
+        req.login(req.user,{session:false},(err)=>{
+            if(err){
+                this.onError(res,err)
+            }
+        });
+        const token = functionUtil.generateSignedToken(req.user);
+        res.json({Status:httpStatus.OK,Code:httpStatus.OK,data:token});
+        return res;
+ 
+     },
     onUnauthorizedUser:function(res){
         res.status(httpStatus.UNAUTHORIZED);
         res.set("Content-Type","application/json");
