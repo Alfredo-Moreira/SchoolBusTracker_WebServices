@@ -40,7 +40,7 @@
     "babel-cli": "^6.26.0",
     "mongoose-seed": "^0.5.1",
     "babel-preset-env": "^1.7.0",
-    "bcrypt": "^3.0.4",
+    "bcrypt": "^3.0.5",
     "jest": "^23.5.0",
     "jest-html-reporter": "^2.4.2",
     "superagent": "^4.0.0",
