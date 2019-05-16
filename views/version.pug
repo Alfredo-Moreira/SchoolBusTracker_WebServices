@@ -1,0 +1,40 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title Version
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name="theme-color", content="#ffffff")
+    meta(name='description', content='Versiom page')
+    meta(name='author', content='Alfredo Moreira')
+    meta(name="msapplication-TileColor", content="#da532c")
+    link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous')
+    style.
+      .container {
+      margin-top:60px;
+      margin-left:20px !important;
+      }
+      .navbar-brand {
+         color: #ffff !important;
+      }
+  body.d-flex.flex-column.h-100(data-gr-c-s-loaded='true')
+   header
+    nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
+     a.navbar-brand SchoolBus Tracker
+     button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarCollapse', aria-controls='navbarCollapse', aria-expanded='false', aria-label='Toggle navigation')
+      span.navbar-toggler-icon
+     #navbarCollapse.collapse.navbar-collapse
+      ul.navbar-nav.mr-auto
+       li.nav-item
+        a.nav-link(href='/version')
+          | Version 
+       li.nav-item
+        a.nav-link(href="/about")
+          | About
+   main.flex-shrink-0(role='main')
+   .container
+    div
+     div(class="version-container")
+     p Version: #{version}
+     p Build Number: #{build}
+     p Environemnt: #{env}

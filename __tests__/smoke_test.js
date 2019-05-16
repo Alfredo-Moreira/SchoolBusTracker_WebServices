@@ -26,6 +26,19 @@ describe('Environment Suite of tests', () => {
     });
 });
 
+describe('Test Render pages',()=>{
+    test('Should test for version page', async()=>{
+        const response = await supertest(app).get('/version');
+        expect(response.statusCode).toBe(httpStatus.OK);
+    });
+
+    test('Should test for about page', async()=>{
+        const response = await supertest(app).get('/about');
+        expect(response.statusCode).toBe(httpStatus.OK);
+    })
+
+})
+
 describe('Models Suite of Tests', () => {
 
     afterAll((done) => {

@@ -2,12 +2,13 @@
   "name": "package",
   "version": "1.0.0",
   "description": "This project started as my Senior Design project in college. Unfortunately, in college I was not so in-tune with Software Development cycle/best practices. Now 2 years into the IT Corporate world I’m have now a better understanding. Thus this 2nd attempt at this project.",
-  "main": "index.js",
+  "main": "server.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
+    "express-favicon": "^2.0.1",
     "express-session": "^1.15.6",
     "git": "^0.1.5",
     "helmet": "^3.15.0",
@@ -31,9 +32,11 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
     "passport-localapikey": "0.0.3",
+    "pug": "^2.0.3",
     "request": "^2.88.0",
     "rollbar": "^2.5.2",
     "save": "^2.3.3",
+    "serve-favicon": "^2.5.0",
     "should": "^13.2.1"
   },
   "devDependencies": {

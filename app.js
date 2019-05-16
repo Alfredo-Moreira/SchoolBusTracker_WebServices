@@ -5,6 +5,8 @@
 const express = require ('express');
 const helmet =  require('helmet');
 const mongoose = require('./mongoose');
+const favicon = require('serve-favicon');
+const path = require('path');
 
 //JS Files
 const config = require('./config/config');
@@ -64,6 +66,7 @@ app.use(helmet());
 app.set('port',port);
 app.set('hostURL',hostURL);
 app.set('mongoose',mongoose);
+app.set('view engine', 'pug')
 
 //Connection URL
 const mongDBURL = mongoose.get('url');
@@ -74,11 +77,25 @@ app.use('/v1/admin',admin);
 app.use('/v1/school',school);
 app.use('/v1/parent',parent);
 app.use('/v1/child',child);
+app.use(favicon(path.join(__dirname,'favicon','favicon.ico')));
 app.get('/', (req,res)=> {
         //To be redirected to help page or swagger page
 		res.redirect('/v1/authenticate/unauthorized');
-
 });
+
+//App Views
+app.get('/version',(req,res)=>{
+res.render('version',{
+    version:config.apiInfo.version,
+    build:config.apiInfo.Build,
+    env:process.env.ENV});
+});
+app.get('/about',(req,res)=>{
+    res.render('about'),{
+        aboutURL:hostURL+':'+port+'/about',
+        versionURL:hostURL+':'+port+'/version',
+    };
+    });
 
 mongoose.connect(mongDBURL,(err)=>{
     if(err){
