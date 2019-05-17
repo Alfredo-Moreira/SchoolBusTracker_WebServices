@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "mongoose-seed": "^0.5.1",
+    "mongoose-seed": "^0.6.0",
     "babel-preset-env": "^1.7.0",
     "bcrypt": "^3.0.4",
     "jest": "^23.5.0",
