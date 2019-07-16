@@ -11,7 +11,8 @@
 var config = require('../config/config');
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
-var DBConnection = mongoose.createConnection('mongodb://localhost/BusTrackerDB');
+var mongooseURL = require('../mongoose').get('url');
+var DBConnection = mongoose.createConnection(mongooseURL);
 var moment = require('moment');
 var dateFormat = moment().utc().format();
 autoIncrement.initialize(DBConnection);
@@ -23,7 +24,7 @@ childFirstName:{type: String, required:true},
 childLastName:{type: String, required:true},
 childAge: {type:Number, required:true},
 childGrade: {type:Number, required:true},
-childGender: {type:String, required:true,min:0,max:1},
+childGender: {type:Number, required:true,min:0,max:1},
 childParentId: {type:[Number], required:true,max:2},
 childSchoolId: {type:Number, required:true},
 childRouteId: {type:Number, required:true},
