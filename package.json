@@ -51,7 +51,7 @@
   },
   "scripts": {
     "mongo": "mongod",
-    "seed_Debug": "node ./populateDB/seed-Debug.js",
+    "seed_Debug": "ENV=Debug node ./populateDB/seed-Debug.js",
     "start_Debug": "ENV=Debug nodemon server.js",
     "start_Dev": "ENV=Development nodemon server.js",
     "start_Prod": "ENV=Production nodemon server.js",

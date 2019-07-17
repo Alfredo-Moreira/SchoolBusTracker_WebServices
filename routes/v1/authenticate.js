@@ -4,12 +4,16 @@ var networkUtil = require('../../helper-functions/networkUtil');
 var router = express.Router();
 
 router.post('/admin/login',passport.authenticate('Admin','local'),(req,res)=>{
-    networkUtil.onAuthorizedAdminUser(req,res)
+    networkUtil.onAuthorizedAdminUser(req,res);
 });
 
 router.post('/parent/login',passport.authenticate('Parent','local'),(req,res)=>{
-    networkUtil.onAuthorizedAdminUser(req,res)
+    networkUtil.onAuthorizedAdminUser(req,res);
 });
+
+router.post('/driver/login',passport.authenticate('Driver','local'),(req,res)=>{
+    networkUtil.onAuthorizedDriverUser(req,res);
+})
 
 router.get('/unauthorized',(req,res,next)=>{
    networkUtil.onUnauthorizedUser(res);

@@ -47,7 +47,7 @@ Driver.pre('save', function(next) {
 	var driverUser = this;
 	
 	// only hash the password if it has been modified (or is new)
-	if (!driverUser.isModified('parentPassword')) return next();
+	if (!driverUser.isModified('driverPassword')) return next();
 	
 	// generate a salt
 	bcrypt.genSalt(10, function(err, salt) {
