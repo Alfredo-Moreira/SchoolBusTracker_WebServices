@@ -70,7 +70,6 @@ Testing Web Services: Google Chrome Extension Postman:
 
 
 //TO DO
-write Driver smoke tests
 Add Parent School ID
 
 

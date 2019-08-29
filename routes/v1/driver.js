@@ -28,7 +28,7 @@ router.get('/driverUser/:id', passport.authenticate(['admin-rule','driver-rule']
 });
 
 //Delete Driver
-router.delete('/driverUser/delete/:id',passport.authenticate(['admin-rule','driver-rule'],{session:false}),(req,res)=>{
+router.delete('/driverUser/delete/:id',passport.authenticate(['admin-rule'],{session:false}),(req,res)=>{
     const params = {_id:req.params.id};
     mongooseUtil.deleteOne(driver_model,params,res);
 });
