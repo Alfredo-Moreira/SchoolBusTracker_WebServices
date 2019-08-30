@@ -16,6 +16,7 @@ const adminModel = require('../models/admin_model');
 const schoolModel = require('../models/school_model');
 const parentModel = require('../models/parent_model');
 const childModel = require('../models/child_model');
+const driverModel =  require('../models/driver_model');
 
 describe('Environment Suite of tests', () => {
     test('Should failed when env not test and ', async () => {
@@ -37,7 +38,7 @@ describe('Test Render pages',()=>{
         expect(response.statusCode).toBe(httpStatus.OK);
     })
 
-})
+});
 
 describe('Models Suite of Tests', () => {
 
@@ -88,6 +89,16 @@ describe('Models Suite of Tests', () => {
         expect(parent.parentLastName).toMatch(mockModel.parentModelFirst.parentLastName);
         expect(parent.parentEmail).toMatch(mockModel.parentModelFirst.parentEmail);
         expect(parent.parentPhoneNumber).toMatch(mockModel.parentModelFirst.parentPhoneNumber);
+    });
+    test('Test the Driver Model',async()=>{
+        await new driverModel(mockModel.DriverFirstModel).save();
+        const driver = await driverModel.findOne({
+            driverFirstName: mockModel.DriverFirstModel.driverFirstName
+        });
+        expect(driver.driverFirstName).toMatch(mockModel.DriverFirstModel.driverFirstName);
+        expect(driver.driverLastName).toMatch(mockModel.DriverFirstModel.driverLastName);
+        expect(driver.driverEmail).toMatch(mockModel.DriverFirstModel.driverEmail);
+        expect(driver.driverPhoneNumber).toMatch(mockModel.DriverFirstModel.driverPhoneNumber);
     })
 });
 
@@ -618,5 +629,116 @@ describe('Testing Child endpoints',()=>{
         expect(response.statusCode).toBe(httpStatus.OK);
         expect(response.body.data).toBe("Data Deleted");
     });
-
 })
+
+    describe('Testing Driver endpoints',()=>{
+        var userID = null;
+    
+        beforeAll(async (done) => {
+            await new adminModel(mockModel.defaultAdmin).save();
+            await new driverModel(mockModel.defaultDriver).save();
+    
+            //Login Driver token
+            const DriverCreds = {
+                username: mockModel.defaultDriver.driverUsername,
+                password: mockModel.defaultDriver.driverPassword
+            };
+            const DriverResponse = await supertest(app).post('/v1/authenticate/driver/login').send(DriverCreds);
+            tokenDriver = DriverResponse.body.data.token;
+    
+            //Login Admin token
+            const Admincreds = {
+                username: mockModel.defaultAdmin.adminUsername,
+                password: mockModel.defaultAdmin.adminPassword
+            };
+            const AdminResponse = await supertest(app).post('/v1/authenticate/admin/login').send(Admincreds);
+            tokenAdmin = AdminResponse.body.data.token;
+    
+            return done();
+        });
+        afterAll((done) => {
+            tokenDriver = null;
+            for (var i in mongoose.connection.collections) {
+                mongoose.connection.collections[i].remove(function () {});
+            }
+            return done();
+        });
+
+
+    test('Test /v1/driver/driverUser/add endpoint actually adds', async() =>{
+        const temp =  new driverModel(mockModel.DriverFirstModel);
+        const response = await supertest(app).post('/v1/driver/driverUser/add')
+        .set('Authorization', 'Bearer ' + tokenAdmin).send(temp);
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+        expect(response.body.data).toBe("Data saved");
+    });
+
+    test('Test /v1/driver/driverUser/add wrong payload actually adds', async() =>{
+        const temp =  new childModel(mockModel.DriverBadModel);
+        const response = await supertest(app).post('/v1/driver/driverUser/add')
+        .set('Authorization', 'Bearer ' + tokenAdmin).send(temp);
+        expect(response.status).toBe(httpStatus.BAD_REQUEST);
+        expect(response.statusCode).toBe(httpStatus.BAD_REQUEST);
+        expect(response.body.Message).toBe("Bad Request");
+        expect(response.body.Data).toBe("Something went wrong, we apologize!")  
+    });
+
+    test('test /v1/driver/driverUser/list get list of child objects', async()=>{
+        const response = await supertest(app).get('/v1/driver/driverUser/list')
+        .set('Authorization', 'Bearer ' + tokenAdmin)
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+        expect(response.body.data).toBeInstanceOf(Array);
+        expect(response.body.data.length).toEqual(2);
+
+         //get First Driver
+         userID = response.body.data[0]._id;
+    });
+
+     test('test /v1/driver/driverUser/:id get Driver ID with Admin Token', async()=>{
+        const response = await supertest(app).get('/v1/driver/driverUser/' + userID)
+        .set('Authorization', 'Bearer ' + tokenAdmin);
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+        expect(response.body.data.driverFirstName).toMatch(mockModel.defaultDriver.driverFirstName);
+        expect(response.body.data.driverLastName).toMatch(mockModel.defaultDriver.driverLastName);
+        expect(response.body.data.driverPhoneNumber).toBe(mockModel.defaultDriver.driverPhoneNumber);
+
+    });
+
+    test('test /v1/driver/driverUser/:id get Driver ID with Driver Token', async()=>{
+        const response = await supertest(app).get('/v1/driver/driverUser/' + userID)
+        .set('Authorization', 'Bearer ' + tokenDriver);
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+        expect(response.body.data.driverFirstName).toMatch(mockModel.defaultDriver.driverFirstName);
+        expect(response.body.data.driverLastName).toMatch(mockModel.defaultDriver.driverLastName);
+        expect(response.body.data.driverPhoneNumber).toBe(mockModel.defaultDriver.driverPhoneNumber);
+
+    });
+
+    test('test /v1/driver/driverUser/:id update Driver', async()=>{
+        const temp = new driverModel(mockModel.DriverFirstModel);
+        const response = await supertest(app).put('/v1/driver/driverUser/' + userID)
+        .set('Authorization', 'Bearer ' + tokenAdmin).send(temp);
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+        expect(response.body.data).toBe("Data Updated");
+    });
+
+    test('test /v1/driver/driverUser/delete/:id attempt to delete Driver with Driver Token', async()=>{
+        const response = await supertest(app).delete('/v1/driver/driverUser/delete/' + userID)
+        .set('Authorization', 'Bearer ' + tokenDriver);
+        expect(response.status).toBe(httpStatus.UNAUTHORIZED);
+        expect(response.statusCode).toBe(httpStatus.UNAUTHORIZED);
+    });
+
+    test('test /v1/driver/driverUser/delete/:id delete Driver', async()=>{
+        const response = await supertest(app).delete('/v1/driver/driverUser/delete/' + userID)
+        .set('Authorization', 'Bearer ' + tokenAdmin);
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.statusCode).toBe(httpStatus.OK);
+        expect(response.body.data).toBe("Data Deleted");
+    });
+});

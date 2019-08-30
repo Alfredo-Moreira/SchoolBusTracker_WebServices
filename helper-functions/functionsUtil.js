@@ -2,6 +2,7 @@
 const config = require('../config/config');
 const adminModel = require('../models/admin_model');
 const parentModel = require('../models/parent_model');
+const driverModel = require('../models/driver_model');
 const jwt = require('jsonwebtoken');
 const rollback = require('../helper-classes/rollbar');
 
@@ -30,6 +31,25 @@ const functionUtil = {
     },
     validateParentUser:function(username,pass,fn){
         return parentModel.findOne({parentUsername:username},(err,user)=>{
+            if (!user || err) {
+                 rollback.logFailedLogin(username)
+                 return fn(null, false, { message: 'Incorrect username' });
+            }
+            user.comparePassword(pass,(err,isMatch)=>{
+                if (err){
+                    return fn(null, false, { message:err.message });
+                }
+                if(isMatch){
+                    return fn(null, user,{
+                    message: 'Successful Login'
+            })}else{
+                return fn(null, false, { message: 'Incorrect password' });
+            }
+        });
+          });
+    },
+    validateDriverUser:function(username,pass,fn){
+        return driverModel.findOne({driverUsername:username},(err,user)=>{
             if (!user || err) {
                  rollback.logFailedLogin(username)
                  return fn(null, false, { message: 'Incorrect username' });

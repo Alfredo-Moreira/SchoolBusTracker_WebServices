@@ -43,6 +43,26 @@ var data = [
             'parentGender':1
         }
         ]
+    },
+    {
+        'model':'Driver',
+        'documents':[
+            {
+            '_id':0,
+            'driverFirstName':'Thommas',
+            'driverLastName':'James',
+            'driverEmail':'tj@gmail.com',
+            'driverAddress':'85 S Union Blvd',
+            'driverPhoneNumber':'3033355735',
+            'driverUsername':'username-thomas',
+            'driverPassword':'thomasPassword',
+            'driverAge':35,
+            'driverGender':1,
+            'driverBusId':0,
+            'driverSchoolId':0,
+            'driverRouteId':0,
+            }
+        ]
     }
 ];
 
