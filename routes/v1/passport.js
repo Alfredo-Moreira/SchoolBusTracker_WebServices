@@ -7,6 +7,7 @@ const JWTStrategy   = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 const adminModel = require('../../models/admin_model');
 const parentModel = require('../../models/parent_model');
+const driverModel = require('../../models/driver_model');
 const functionUtil = require('../../helper-functions/functionsUtil');
 const rollbar = require('../../helper-classes/rollbar');
 
@@ -33,6 +34,24 @@ passport.use('Admin',new LocalStrategy(
 passport.use('Parent',new LocalStrategy(
     function(username, password,done) {
         return functionUtil.validateParentUser(username,password,(err,user)=>{
+              if(err){
+                  rollbar.logFailedLogin(username);
+                  return done(null,false);
+              }
+              if(user===null){
+                  rollbar.logFailedLogin(username);
+                  return done(null,false);
+              } else {
+                  rollbar.logSuccessLogin(username);
+                  return done(null,user);
+              }
+          });
+    }
+  ));
+
+  passport.use('Driver',new LocalStrategy(
+    function(username, password,done) {
+        return functionUtil.validateDriverUser(username,password,(err,user)=>{
               if(err){
                   rollbar.logFailedLogin(username);
                   return done(null,false);
@@ -81,7 +100,7 @@ passport.use('admin-rule',new JWTStrategy({
         })
     }));
 
-    passport.use('parent-rule',new JWTStrategy({
+passport.use('parent-rule',new JWTStrategy({
         jwtFromRequest:ExtractJWT.fromAuthHeaderAsBearerToken(),
         secretOrKey:config.session.secret,
 
@@ -93,5 +112,20 @@ passport.use('admin-rule',new JWTStrategy({
             return done(null,user);
         })
     }));
+
+passport.use('driver-rule',new JWTStrategy({
+        jwtFromRequest:ExtractJWT.fromAuthHeaderAsBearerToken(),
+        secretOrKey:config.session.secret,
+
+    },(jwt_payload,done)=>{
+        return driverModel.findOne({_id:jwt_payload._id},(err,user)=>{
+            if(err){
+                return(err);
+            }
+            return done(null,user);
+        })
+    }));
+
+
 
 module.exports = passport;

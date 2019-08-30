@@ -52,6 +52,7 @@ const admin = require('./routes/v1/admin');
 const school = require('./routes/v1/school');
 const parent = require('./routes/v1/parent');
 const child = require('./routes/v1/child');
+const driver =  require('./routes/v1/driver');
 
 //Application Configuration
 app.use(require('cookie-parser')());
@@ -77,6 +78,7 @@ app.use('/v1/admin',admin);
 app.use('/v1/school',school);
 app.use('/v1/parent',parent);
 app.use('/v1/child',child);
+app.use('/v1/driver',driver);
 app.use(favicon(path.join(__dirname,'favicon','favicon.ico')));
 app.get('/', (req,res)=> {
         //To be redirected to help page or swagger page
