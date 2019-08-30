@@ -17,6 +17,7 @@
     "jest-junit": "^6.4.0",
     "jsonwebtoken": "^8.5.1",
     "kerberos": "^0.0.22",
+
     "m": "^1.5.4",
     "mime": "^2.4.4",
     "mocha": "^5.2.0",
