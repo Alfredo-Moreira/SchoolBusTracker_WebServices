@@ -70,6 +70,6 @@ function decodeMongooseError(errorCode){
         default:
             return "Something went wrong, we apologize!"
     }
-};
+}
 
 module.exports = mongooseFunctions;
