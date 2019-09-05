@@ -8,7 +8,6 @@
 
 
 //Variables 
- var config = require('./config/config');
  var mongoose = require('mongoose');
  var autoIncrement = require('mongoose-auto-increment');
  var mongooseURL = require('../mongoose').get('url');

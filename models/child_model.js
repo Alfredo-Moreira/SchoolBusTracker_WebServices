@@ -35,5 +35,5 @@ dateUpdated: {type:Date, format:dateFormat, default:Date.now()}
 });
 
 //Define Model
-Child.plugin(autoIncrement.plugin,'child');
-module.exports = mongoose.model('child',Child);
+Child.plugin(autoIncrement.plugin,'Child');
+module.exports = mongoose.model('Child',Child);

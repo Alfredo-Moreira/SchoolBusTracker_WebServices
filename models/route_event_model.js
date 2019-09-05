@@ -6,7 +6,6 @@
 
 
 //Variables 
-var config = require('../config/config');
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
 var mongooseURL = require('../mongoose').get('url');
@@ -22,5 +21,5 @@ var Route_event = new mongoose.Schema({
 });
 
 //Define Model
-Route_event.plugin(autoIncrement.plugin,'Route_event');
-module.exports = mongoose.model('Route_event',Route_event);
+Route_event.plugin(autoIncrement.plugin,'RouteEvent');
+module.exports = mongoose.model('RouteEvent',Route_event);
