@@ -69,9 +69,6 @@ Testing Web Services: Google Chrome Extension Postman:
 
 
 
-//TO DO
-Add Parent School ID
-
 
 
 

@@ -7,6 +7,7 @@ const school = 'models/school_model.js'
 const admin = 'models/admin_model.js'
 const parent = 'models/parent_model.js'
 const driver = 'models/driver_model.js'
+const child = 'models/child_model.js'
 
 
 // Connect to MongoDB via Mongoose
@@ -17,11 +18,12 @@ seeder.connect(config.mongoDBConnection.mongoDB_connection_string_Debug, functio
     school,
     admin,
     parent,
-    driver
+    child,
+    driver,
   ]);
 
  // Clear specified collections
- seeder.clearModels(['School','Admin','Parent','Driver'], function() {
+ seeder.clearModels(['School','Admin','Parent','Driver','Child'], function() {
 
   // Callback to populate DB once collections have been cleared
   seeder.populateModels(seedData, function() {
