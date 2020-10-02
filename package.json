@@ -47,7 +47,7 @@
     "jest-html-reporter": "^2.5.0",
     "mongoose-seed": "^0.6.0",
     "superagent": "^4.1.0",
-    "supertest": "^3.4.2"
+    "supertest": "^5.0.0"
   },
   "scripts": {
     "mongo": "mongod",
