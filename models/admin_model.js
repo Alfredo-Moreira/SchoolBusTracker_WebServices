@@ -20,7 +20,7 @@ var Admin = new mongoose.Schema({
 userRoleId: { type: Number, required:true, default:config.userRoles.admin},
 adminFirstName: {type: String, required:true},
 adminLastName: {type: String, require : true},
-adminGender: {type:Number, required:true,min:0,max:1,},
+adminGender: {type:String, enum:["Male","Female"],required:true},
 adminEmail: {type:String, required:true},
 adminUsername: {type:String, required:true, index: { unique: true }},
 adminPassword: {type:String, required:true},
@@ -50,13 +50,13 @@ bcrypt.genSalt(10, function(err, salt) {
         next();
     });
 });
-
-
 });
 
 Admin.methods.comparePassword = function(candidatePassword, fn) {
     bcrypt.compare(candidatePassword, this.adminPassword, function(err, isMatch) {
-        if (err) return fn(err);
+        if (err){
+            return fn(err);
+        }
         fn(null, isMatch);
     });
 };

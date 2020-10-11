@@ -21,6 +21,7 @@ var Alert = new mongoose.Schema({
     alertDriverId:{type:Number, require:true},
     alertChildId:{type:Number, required: true},
     alertParentNotifiedId:{type:[Number],required:true},
+    alertMessage:{type:String, required:true},
     dateCreated:{type:Date, format: dateFormat, default: Date.now()},
 });
 
