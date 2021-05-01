@@ -34,7 +34,7 @@
     "passport-localapikey": "0.0.3",
     "pug": "^2.0.4",
     "request": "^2.88.0",
-    "rollbar": "^2.8.1",
+    "rollbar": "^2.21.1",
     "save": "^2.4.0",
     "serve-favicon": "^2.5.0",
     "should": "^13.2.3"
